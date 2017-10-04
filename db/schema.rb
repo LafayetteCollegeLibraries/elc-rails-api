@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004174127) do
+ActiveRecord::Schema.define(version: 20171004182913) do
+
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
+    t.integer "drupal_node_id"
+    t.string "drupal_node_type", default: "node"
+  end
 
   create_table "subjects", force: :cascade do |t|
     t.string "label"
