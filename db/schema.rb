@@ -10,12 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004182913) do
+ActiveRecord::Schema.define(version: 20171004190100) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
     t.integer "drupal_node_id"
     t.string "drupal_node_type", default: "node"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer "author_id"
+    t.string "title"
+    t.string "format"
+    t.integer "number"
+    t.string "drupal_node_type", default: "node"
+    t.integer "drupal_node_id"
+    t.index ["author_id"], name: "index_items_on_author_id"
+  end
+
+  create_table "items_subjects", id: false, force: :cascade do |t|
+    t.integer "item_id"
+    t.integer "subject_id"
+    t.index ["item_id"], name: "index_items_subjects_on_item_id"
+    t.index ["subject_id"], name: "index_items_subjects_on_subject_id"
   end
 
   create_table "subjects", force: :cascade do |t|
