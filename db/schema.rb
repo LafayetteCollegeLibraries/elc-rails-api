@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004190100) do
+ActiveRecord::Schema.define(version: 20171004204123) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -33,6 +33,25 @@ ActiveRecord::Schema.define(version: 20171004190100) do
     t.integer "subject_id"
     t.index ["item_id"], name: "index_items_subjects_on_item_id"
     t.index ["subject_id"], name: "index_items_subjects_on_subject_id"
+  end
+
+  create_table "patrons", force: :cascade do |t|
+    t.string "name"
+    t.integer "drupal_node_id"
+    t.string "drupal_node_type", default: "node"
+  end
+
+  create_table "patrons_person_types", id: false, force: :cascade do |t|
+    t.integer "patron_id"
+    t.integer "person_type_id"
+    t.index ["patron_id"], name: "index_patrons_person_types_on_patron_id"
+    t.index ["person_type_id"], name: "index_patrons_person_types_on_person_type_id"
+  end
+
+  create_table "person_types", force: :cascade do |t|
+    t.string "label"
+    t.string "drupal_node_type", default: "taxonomy"
+    t.integer "drupal_node_id"
   end
 
   create_table "subjects", force: :cascade do |t|
