@@ -1,1 +1,1 @@
-json.extract! author, :id, :name
+json.partial! 'patron/person', person: @author

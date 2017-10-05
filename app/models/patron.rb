@@ -1,4 +1,6 @@
 class Patron < ApplicationRecord
+  include Drupal
+
   has_and_belongs_to_many :person_types
 
   def representative?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004210338) do
+ActiveRecord::Schema.define(version: 20171005160600) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20171004210338) do
     t.integer "number"
     t.string "drupal_node_type", default: "node"
     t.integer "drupal_node_id"
+    t.integer "drupal_title_node_id"
     t.index ["author_id"], name: "index_items_on_author_id"
   end
 
@@ -33,6 +34,11 @@ ActiveRecord::Schema.define(version: 20171004210338) do
     t.integer "subject_id"
     t.index ["item_id"], name: "index_items_subjects_on_item_id"
     t.index ["subject_id"], name: "index_items_subjects_on_subject_id"
+  end
+
+  create_table "ledgers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "loans", force: :cascade do |t|
@@ -45,7 +51,9 @@ ActiveRecord::Schema.define(version: 20171004210338) do
     t.integer "representative_id"
     t.string "drupal_node_type", default: "node"
     t.integer "drupal_node_id"
+    t.integer "ledger_id"
     t.index ["item_id"], name: "index_loans_on_item_id"
+    t.index ["ledger_id"], name: "index_loans_on_ledger_id"
     t.index ["representative_id"], name: "index_loans_on_representative_id"
     t.index ["shareholder_id"], name: "index_loans_on_shareholder_id"
   end
