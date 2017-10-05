@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004204123) do
+ActiveRecord::Schema.define(version: 20171004210338) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -33,6 +33,21 @@ ActiveRecord::Schema.define(version: 20171004204123) do
     t.integer "subject_id"
     t.index ["item_id"], name: "index_items_subjects_on_item_id"
     t.index ["subject_id"], name: "index_items_subjects_on_subject_id"
+  end
+
+  create_table "loans", force: :cascade do |t|
+    t.string "label"
+    t.integer "item_id"
+    t.datetime "checkout_date"
+    t.datetime "return_date"
+    t.string "ledger_filename"
+    t.integer "shareholder_id"
+    t.integer "representative_id"
+    t.string "drupal_node_type", default: "node"
+    t.integer "drupal_node_id"
+    t.index ["item_id"], name: "index_loans_on_item_id"
+    t.index ["representative_id"], name: "index_loans_on_representative_id"
+    t.index ["shareholder_id"], name: "index_loans_on_shareholder_id"
   end
 
   create_table "patrons", force: :cascade do |t|
