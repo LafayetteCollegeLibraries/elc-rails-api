@@ -3,6 +3,10 @@ class Patron < ApplicationRecord
 
   has_and_belongs_to_many :person_types
 
+  def loans
+    Loan.for_patron(id)
+  end
+
   def representative?
     types.include? 'Representative'
   end

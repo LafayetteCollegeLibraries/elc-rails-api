@@ -18,17 +18,35 @@ class Loan < ApplicationRecord
     "#{representative.name} borrowed \"#{item.title}\" on #{checkout_date.strftime('%A, %B %-d, %Y')}"
   end
 
-
   def return_date=(date)
     super(ensure_datetime(date))
   end
   
-  def self.random
-    self.find(self.random_id)
-  end
+  # convenience searchers
+  class << self
+    def for_item(item)
+      where(item: item)
+    end
 
-  def self.random_id
-    rand(self.count)
+    def for_patron(person)
+      where(representative: person).or(where(shareholder: person))
+    end
+
+    def for_representative(person)
+      where(representative: person)
+    end
+
+    def for_shareholder(person)
+      where(shareholder: person)
+    end
+
+    def random
+      find(random_id)
+    end
+  
+    def random_id
+      rand(count)
+    end
   end
 
   private
