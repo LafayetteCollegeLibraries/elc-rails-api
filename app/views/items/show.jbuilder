@@ -1,0 +1,1 @@
+json.partial! 'items/item_full', item: @item

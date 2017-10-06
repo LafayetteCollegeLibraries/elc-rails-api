@@ -1,5 +1,6 @@
-class LoanController < ApplicationController
+class LoansController < ApplicationController
   def index
+    @loans = Loan.paginate(page: params[:page], per_page: params[:per_page])
   end
 
   def show

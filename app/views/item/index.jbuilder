@@ -1,1 +1,0 @@
-json.array! @items, partial: 'item/item', as: :item

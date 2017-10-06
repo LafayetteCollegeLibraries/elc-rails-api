@@ -3,19 +3,31 @@ require 'date'
 class Loan < ApplicationRecord
   include Drupal
 
+  # for now, skip loans w/ no shareholder
+  # default_scope { where("shareholder_id NOT NULL OR representative_id NOT NULL") }
+
   belongs_to :shareholder, class_name: 'Patron', optional: true
   belongs_to :representative, class_name: 'Patron', optional: true
   belongs_to :item
   belongs_to :ledger
+
 
   def checkout_date=(date)
     super(ensure_datetime(date))
   end
 
   def label
-    return self[:label] if representative.blank?
+    "#{loaned_to} borrowed \"#{item.title}\" on #{checkout_date.strftime('%A, %B %-d, %Y')}"
+  end
 
-    "#{representative.name} borrowed \"#{item.title}\" on #{checkout_date.strftime('%A, %B %-d, %Y')}"
+  def loaned_to
+    if representative.present?
+      representative.name
+    elsif shareholder.present?
+      shareholder.name
+    else
+      '???'
+    end
   end
 
   def return_date=(date)

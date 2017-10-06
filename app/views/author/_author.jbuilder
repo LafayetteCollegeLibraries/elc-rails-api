@@ -1,1 +1,0 @@
-json.partial! 'patron/person', person: @author

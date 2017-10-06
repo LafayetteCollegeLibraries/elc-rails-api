@@ -1,6 +1,6 @@
 class SubjectController < ApplicationController
   def index
-    @subjects = Subject.all
+    @subjects = Subject.paginate(page: params[:page], per_page: params[:per_page])
   end
 
   def show

@@ -7,4 +7,9 @@ class Item < ApplicationRecord
   def loan_history
     Loan.for_item(id)
   end
+
+  # this is just a band-aid for now
+  def title
+    self[:title].gsub('&amp;', '&')
+  end
 end
