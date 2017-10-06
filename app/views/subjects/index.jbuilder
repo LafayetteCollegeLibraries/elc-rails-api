@@ -3,7 +3,7 @@ json.data do
 end
 
 json.partial! 'partials/meta', locals: {
-  klass: Subject,
+  total: @subject_count || Subject.count,
   page: (params[:page] || 1).to_i,
-  per_page: (params[:per_page] || WillPaginate.per_page).to_i,
+  per_page: (params[:per_page] || WillPaginate.per_page).to_i
 }

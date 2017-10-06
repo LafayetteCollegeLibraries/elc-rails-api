@@ -3,14 +3,10 @@ require 'date'
 class Loan < ApplicationRecord
   include Drupal
 
-  # for now, skip loans w/ no shareholder
-  # default_scope { where("shareholder_id NOT NULL OR representative_id NOT NULL") }
-
   belongs_to :shareholder, class_name: 'Patron', optional: true
   belongs_to :representative, class_name: 'Patron', optional: true
   belongs_to :item
   belongs_to :ledger
-
 
   def checkout_date=(date)
     super(ensure_datetime(date))
