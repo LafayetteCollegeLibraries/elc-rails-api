@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :authors, only: [:index, :show]
   resources :items, only: [:index, :show]
+  resources :ledgers, only: [:index, :show]
   resources :loans, only: [:index, :show]
   resources :patrons, only: [:index, :show]
   resources :subjects, only: [:index, :show]
