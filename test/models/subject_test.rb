@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class SubjectTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "it works i guess" do
+    subject = subjects(:fiction)
+    assert subject.label.include? "Fiction"
+  end
 end

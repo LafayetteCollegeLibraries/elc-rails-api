@@ -1,11 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+frankenstein:
+  title: "Frankenstein: or the Modern Prometheus"
+  author: mary_shelley
+  subjects: fiction
+
+lunch_poems:
+  title: "Lunch Poems"
+  author: frank_o_hara
+  subjects: fiction, poetry
+
+the_violent_bear_it_away: 
+  title: "The Violent Bear It Away"
+  author: flannery_o_connor
+  subjects: fiction
+
+no_author_assigned:
+  title: "No Author Assigned"
+  subjects: fiction
