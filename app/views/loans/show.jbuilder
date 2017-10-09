@@ -1,1 +1,1 @@
-json.partial! 'loans/loan_full', loan: @loan
+json.partial! 'loans/loan', loan: @loan

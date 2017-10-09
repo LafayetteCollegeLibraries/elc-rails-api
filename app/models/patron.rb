@@ -3,6 +3,8 @@ class Patron < ApplicationRecord
 
   has_and_belongs_to_many :person_types
 
+  scope :search, -> (query) { where("name like ?", "%#{query}%") }
+
   def loans
     Loan.for_patron(id)
   end

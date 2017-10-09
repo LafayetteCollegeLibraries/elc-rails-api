@@ -1,9 +1,7 @@
-json.partial! 'loans/common', loan: loan
-
-json.ledger loan.ledger_id
+json.extract! loan, :id, :label
 
 json.item do
-  json.partial! 'items/item_brief', item: loan.item
+  json.partial! 'items/item', item: loan.item
 end
 
 json.checkout_date loan.checkout_date
@@ -23,4 +21,10 @@ json.shareholder do
   else
     json.null!
   end
+end
+
+json.ledger do
+  json.id loan.ledger.id
+  json.filename loan.ledger_filename
+  json.url loan.view_ledger_url
 end

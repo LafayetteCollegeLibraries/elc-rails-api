@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  resources :authors, only: [:index, :show]
-  resources :items, only: [:index, :show]
+  resources :authors, :items, :patrons, :subjects, only: [:index, :show] do
+    collection do
+      get 'search'
+    end
+  end
+
   resources :loans, only: [:index, :show]
-  resources :patrons, only: [:index, :show]
-  resources :subjects, only: [:index, :show]
   
   resources :ledgers, only: [:index, :show] do
     resources :loans, only: [:index, :show]

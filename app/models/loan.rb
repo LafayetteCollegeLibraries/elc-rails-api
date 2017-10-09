@@ -30,6 +30,10 @@ class Loan < ApplicationRecord
     super(ensure_datetime(date))
   end
   
+  def view_ledger_url
+    "https://elc.lafayette.edu/collections/eastonlibrary/#{ledger_filename}"
+  end
+
   # convenience searchers
   class << self
     def for_item(item)
