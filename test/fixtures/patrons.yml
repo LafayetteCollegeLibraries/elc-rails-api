@@ -1,9 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-jason_voorhees:
-  name: "Voorhees, Jason"
-  person_types: representative
-
-pamela_voorhees:
-  name: "Voorhees, Pamela"
+laurie_strode:
+  name: "Strode, Laurie"
   person_types: representative, shareholder
+
+tommy_doyle:
+  name: "Doyle, Tommy"
+  person_types: representative
+  

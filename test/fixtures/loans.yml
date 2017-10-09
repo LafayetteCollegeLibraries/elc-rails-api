@@ -1,11 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+lunch_poems:
+  item: lunch_poems
+  checkout_date: <%= DateTime.new(1978, 10, 31) %>
+  return_date: <%= DateTime.new(1978, 11, 6) %>
+  shareholder: laurie_strode
+  representative: laurie_strode
+  ledger_filename: ELCv0_A_000
+
+scary_stories:
+  item: scary_stories
+  checkout_date: <%= DateTime.new(1978, 10, 24) %>
+  return_date: <%= DateTime.new(1978, 10, 31) %>
+  shareholder: laurie_strode
+  representative: tommy_doyle
+  ledger_filename: ELCv0_A_000

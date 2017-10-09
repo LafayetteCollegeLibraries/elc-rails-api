@@ -2,9 +2,9 @@ require 'test_helper'
 
 class ItemTest < ActiveSupport::TestCase
   test "an item may contain an author" do
-    item = items(:the_violent_bear_it_away)
+    item = items(:lunch_poems)
     assert item.author.present?
-    assert_equal "O'Connor, Flannery", item.author.name
+    assert_equal "O'Hara, Frank", item.author.name
     assert item.author.is_a? Author
   end
 
@@ -14,7 +14,7 @@ class ItemTest < ActiveSupport::TestCase
   end
 
   test "an item may have subjects" do
-    item = items(:the_violent_bear_it_away)
+    item = items(:frankenstein)
     assert item.subjects.present?
     assert item.subjects.first.is_a? Subject
   end

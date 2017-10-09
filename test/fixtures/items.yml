@@ -10,9 +10,9 @@ lunch_poems:
   author: frank_o_hara
   subjects: fiction, poetry
 
-the_violent_bear_it_away: 
-  title: "The Violent Bear It Away"
-  author: flannery_o_connor
+scary_stories:
+  title: Scary Stories to Tell in the Dark
+  author: alvin_schwartz
   subjects: fiction
 
 no_author_assigned:
