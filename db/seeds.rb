@@ -25,12 +25,7 @@ puts "Added #{PersonType.count} person types"
 
 subject_csv_path = File.expand_path('../../data/subjects.csv', __FILE__)
 CSV.foreach(subject_csv_path, headers: true) do |row|
-  subject = Subject.find_or_initialize_by(drupal_node_id: row['taxonomy_id'].to_i)
-  
-  subject.label = row['label']
-  subject.drupal_node_type = 'taxonomy'
-
-  subject.save!
+  Subject.create_from_csv_row!(row)
 end
 
 puts "Added #{Subject.count} subjects"
