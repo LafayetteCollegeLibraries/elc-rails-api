@@ -1,1 +1,1 @@
-json.partial! 'items/item_full', item: @item
+json.partial! 'items/item', item: @item
