@@ -34,8 +34,25 @@ class Loan < ApplicationRecord
     "https://elc.lafayette.edu/collections/eastonlibrary/#{ledger_filename}"
   end
 
-  # convenience searchers
   class << self
+    def initialize_from_csv_row(row)
+      loan = find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
+      return loan unless loan.new_record?
+
+      loan.label = row['label']
+      loan.drupal_node_type = 'taxonomy'
+
+      loan
+    end
+
+    def create_from_csv_row!(row)
+      loan = initialize_from_csv_row(row)
+      loan.save!
+
+      loan
+    end
+
+    # convenience searchers
     def for_item(item)
       where(item: item)
     end
