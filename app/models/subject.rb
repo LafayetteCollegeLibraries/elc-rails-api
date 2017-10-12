@@ -1,5 +1,6 @@
 class Subject < ApplicationRecord
   include Drupal
+  include Randomizable
   
   has_and_belongs_to_many :items
 

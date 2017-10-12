@@ -2,6 +2,7 @@ require 'date'
 
 class Loan < ApplicationRecord
   include Drupal
+  include Randomizable
 
   belongs_to :shareholder, class_name: 'Patron', optional: true
   belongs_to :representative, class_name: 'Patron', optional: true
@@ -67,14 +68,6 @@ class Loan < ApplicationRecord
 
     def for_shareholder(person)
       where(shareholder: person)
-    end
-
-    def random
-      find(random_id)
-    end
-  
-    def random_id
-      rand(count)
     end
   end
 
