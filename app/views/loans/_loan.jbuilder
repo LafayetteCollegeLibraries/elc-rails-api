@@ -2,6 +2,11 @@ json.extract! loan, :id, :label
 
 json.item do
   json.partial! 'items/item', item: loan.item
+
+  # TODO: implement these fields on the loan
+  json.volumes []
+  json.issues []
+  json.years []
 end
 
 json.checkout_date loan.checkout_date
