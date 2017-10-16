@@ -6,6 +6,10 @@ class Author < ApplicationRecord
 
   scope :search, -> (query) { where("name like ?", "%#{query}%") }
 
+  def types
+    ['Author']
+  end
+
   class << self
     def initialize_from_csv_row(row)
       author = find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
