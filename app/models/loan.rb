@@ -35,6 +35,18 @@ class Loan < ApplicationRecord
     "https://elc.lafayette.edu/collections/eastonlibrary/#{ledger_filename}"
   end
 
+  def issues
+    (self[:issues] || '').split(/[;,]\s?/)
+  end
+
+  def volumes
+    (self[:volumes] || '').split(/[;,]\s?/)
+  end
+
+  def years
+    (self[:years] || '').split(/[;,]\s?/)
+  end
+
   class << self
     def initialize_from_csv_row(row)
       loan = find_or_initialize_by(drupal_node_id: row['node_id'].to_i)

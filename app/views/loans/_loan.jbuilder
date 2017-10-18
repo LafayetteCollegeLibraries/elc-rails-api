@@ -4,9 +4,9 @@ json.item do
   json.partial! 'items/item', item: loan.item
 
   # TODO: implement these fields on the loan
-  json.volumes []
-  json.issues []
-  json.years []
+  json.volumes loan.volumes
+  json.issues loan.issues
+  json.years loan.years
 end
 
 json.checkout_date loan.checkout_date
