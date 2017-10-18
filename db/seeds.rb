@@ -23,49 +23,21 @@ PersonType.find_or_create_by(label: 'Author', drupal_node_id: 230)
 
 puts "Added #{PersonType.count} person types"
 
-subject_csv_path = File.expand_path('../../data/subjects.csv', __FILE__)
-CSV.foreach(subject_csv_path, headers: true) do |row|
-  Subject.create_from_csv_row!(row)
+%w(subjects authors patrons).each do |type|
+  model = type.titlecase.singularize.constantize
+  file_path = File.expand_path("../../data/#{type}.csv", __FILE__)
+  CSV.foreach(file_path, headers: true) {|row| model.create_from_csv_row!(row)}
+
+  puts "Added #{model.count} #{type}"
 end
 
-puts "Added #{Subject.count} subjects"
-
-author_csv_path = File.expand_path('../../data/authors.csv', __FILE__)
-CSV.foreach(author_csv_path, headers: true) do |row|
-  author = Author.find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
-
-  author.name = row['name']
-  author.drupal_node_type = 'node'
-
-  author.save!
-end
-
-puts "Added #{Author.count} authors"
-
-patron_csv_path = File.expand_path('../../data/people.csv', __FILE__)
-CSV.foreach(patron_csv_path, headers: true) do |row|
-  type_node_ids = row['person_type_node_ids']
-  
-  patron = Patron.find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
-
-  patron.name = row['name']
-  patron.person_types = type_node_ids.split(';').map do |id|
-    PersonType.find_by(drupal_node_id: id)
-  end.reject { |i| i.blank? } if type_node_ids.present?
-
-  patron.save!
-end
-
-puts "Added #{Patron.count} patrons"
-
-item_csv_path = File.expand_path('../../data/items.csv', __FILE__)
+item_csv_path = File.expand_path('../../data/works.csv', __FILE__)
 CSV.foreach(item_csv_path, headers: true) do |row|
   author_id = row['author_node_id']
   subject_ids = row['subject_node_ids']
 
   node_id = row['node_id'].to_i
   title_node_id = row['title_node_id'].to_i
-  # title = row['item_title'].gsub(/\s?\[vol[^\]]+\]\s?/i, ' ')
   title = row['item_title']
 
   item = Item.find_or_initialize_by(
@@ -74,54 +46,60 @@ CSV.foreach(item_csv_path, headers: true) do |row|
            title: title
          )
 
-  item.title = row['item_title']
   item.format = row['format']
   item.number = row['number'].to_i if row['number']
 
-  item.subjects = subject_ids.split(';').map do |id|
-    Subject.find_by(drupal_node_id: id)
-  end.reject { |s| s.blank? } if subject_ids.present?
+  item.subjects = Subject.where(drupal_node_id: subject_ids.split(';')) if subject_ids
 
   item.author = Author.find_by(drupal_node_id: author_id) if author_id.present?
   item.drupal_node_type = 'node'
-  item.drupal_title_node_id = row['title_node_id']
 
   item.save!
 end
 
 puts "Added #{Item.count} items"
 
+# create a map of items-to-works for loan records that refer to the item
+# and not the work itself
+
+EMBODIED_BY = {}
+embodied_by_path = File.expand_path('../../data/item-embodies-target.csv', __FILE__)
+CSV.foreach(embodied_by_path, headers: true) do |row|
+  EMBODIED_BY[row['entity_id']] = row['target_id']
+end
+
 LEDGER_IDS.map do |ledger_id|
   ledger_csv_path = File.expand_path("../../data/loans-ledger-#{ledger_id}.csv", __FILE__)
 
   ledger = Ledger.find(ledger_id)
+  line_no = 1
   
   CSV.foreach(ledger_csv_path, headers: true) do |row|
+    line_no += 1
+
     shareholder_id = row['shareholder_node_id']
     representative_id = row['representative_node_id']
     item_id = row['item_node_id']
 
-    # I hate this but I'm running into issues where items attached to a loan record
-    # aren't in the Items list?
     item = Item.find_by_drupal_id(item_id)
 
     if item.blank?
-      item = Item.find_by(drupal_title_node_id: item_id)
+      work_id = EMBODIED_BY[item_id]
+      item = Item.find_by_drupal_id(work_id)
     end
 
     if item.blank?
-      puts "couldn't find #{row['item_title']}. skipping loan-ledger-#{ledger_id}:#{row['node_id']}"
+      puts "missing #{row['item_title']}. [#{item_id}] @ loan-ledger-#{ledger_id}:#{line_no}"
       next
     end
 
-    shareholder = Patron.find_by(drupal_node_id: shareholder_id)
+    shareholder = Patron.find_by_drupal_id(shareholder_id)
 
     if (shareholder_id == representative_id)
       representative = shareholder
     else
-      representative = Patron.find_by(drupal_node_id: representative_id)
+      representative = Patron.find_by_drupal_id(representative_id)
     end
-
 
     loan = Loan.find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
     loan.shareholder = shareholder
