@@ -8,13 +8,11 @@ class Subject < ApplicationRecord
 
   class << self
     def initialize_from_csv_row(row)
-      subject = find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
-      return subject unless subject.new_record?
-
-      subject.label = row['label']
-      subject.drupal_node_type = 'taxonomy'
-
-      subject
+      find_or_initialize_by(
+        drupal_node_id: row['taxonomy_id'].to_i,
+        drupal_node_type: 'taxonomy',
+        label: row['label']
+      )
     end
 
     def create_from_csv_row!(row)
