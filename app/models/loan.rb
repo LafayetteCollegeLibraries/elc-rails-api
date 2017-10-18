@@ -9,6 +9,12 @@ class Loan < ApplicationRecord
   belongs_to :item
   belongs_to :ledger
 
+  scope :for_checkout_date, ->(date) { where(checkout_date: date) }
+  scope :for_item, ->(item) { where(item: item) }
+  scope :for_patron, ->(person) { where(representative: person).or(where(shareholder: person)) }
+  scope :for_representative, -> (person) { where(representative: person) }
+  scope :for_shareholder, -> (person) { where(shareholder: person) }
+
   def checkout_date=(date)
     super(ensure_datetime(date))
   end
@@ -64,23 +70,6 @@ class Loan < ApplicationRecord
 
       loan
     end
-
-    # convenience searchers
-    def for_item(item)
-      where(item: item)
-    end
-
-    def for_patron(person)
-      where(representative: person).or(where(shareholder: person))
-    end
-
-    def for_representative(person)
-      where(representative: person)
-    end
-
-    def for_shareholder(person)
-      where(shareholder: person)
-    end
   end
 
   private
@@ -89,7 +78,7 @@ class Loan < ApplicationRecord
       return date if date.is_a? DateTime
 
       if date.is_a? String      
-        month, day, year = date.split('/').map(&:to_i)
+        month, day, year = date.split(/[\/\-]/).map(&:to_i)
         DateTime.new(year, month, day)
       end
     end
