@@ -6,8 +6,8 @@ class Loan < ApplicationRecord
 
   belongs_to :shareholder, class_name: 'Patron', optional: true
   belongs_to :representative, class_name: 'Patron', optional: true
-  belongs_to :item
   belongs_to :ledger
+  has_and_belongs_to_many :items
 
   scope :for_checkout_date, ->(date) { where(checkout_date: date) }
   scope :for_item, ->(item) { where(item: item) }
@@ -20,7 +20,7 @@ class Loan < ApplicationRecord
   end
 
   def label
-    "#{loaned_to} borrowed \"#{item.title}\" on #{checkout_date.strftime('%A, %B %-d, %Y')}"
+    "#{loaned_to} borrowed \"#{works.map(&:title).join(', ')}\" on #{checkout_date.strftime('%A, %B %-d, %Y')}"
   end
 
   def loaned_to
@@ -41,16 +41,8 @@ class Loan < ApplicationRecord
     "https://elc.lafayette.edu/collections/eastonlibrary/#{ledger_filename}"
   end
 
-  def issues
-    (self[:issues] || '').split(/[;,]\s?/)
-  end
-
-  def volumes
-    (self[:volumes] || '').split(/[;,]\s?/)
-  end
-
-  def years
-    (self[:years] || '').split(/[;,]\s?/)
+  def works
+    items.map(&:work).uniq
   end
 
   class << self
