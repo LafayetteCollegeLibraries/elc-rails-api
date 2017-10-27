@@ -7,6 +7,7 @@ class HomeController < ApplicationController
       loans: Loan.count,
       patrons: Patron.count,
       subjects: Subject.count,
+      works: Work.count,
     }
   end
 end
