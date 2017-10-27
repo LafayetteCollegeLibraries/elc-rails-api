@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018150016) do
+ActiveRecord::Schema.define(version: 20171027143734) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -19,21 +19,15 @@ ActiveRecord::Schema.define(version: 20171018150016) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.integer "author_id"
-    t.string "title"
-    t.string "format"
-    t.integer "number"
+    t.integer "work_id"
     t.string "drupal_node_type", default: "node"
     t.integer "drupal_node_id"
-    t.integer "drupal_title_node_id"
-    t.index ["author_id"], name: "index_items_on_author_id"
-  end
-
-  create_table "items_subjects", id: false, force: :cascade do |t|
-    t.integer "item_id"
-    t.integer "subject_id"
-    t.index ["item_id"], name: "index_items_subjects_on_item_id"
-    t.index ["subject_id"], name: "index_items_subjects_on_subject_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "volume"
+    t.string "year"
+    t.string "issue"
+    t.index ["work_id"], name: "index_items_on_work_id"
   end
 
   create_table "ledgers", force: :cascade do |t|
@@ -43,7 +37,7 @@ ActiveRecord::Schema.define(version: 20171018150016) do
 
   create_table "loans", force: :cascade do |t|
     t.string "label"
-    t.integer "item_id"
+    t.integer "work_id"
     t.datetime "checkout_date"
     t.datetime "return_date"
     t.string "ledger_filename"
@@ -55,10 +49,10 @@ ActiveRecord::Schema.define(version: 20171018150016) do
     t.string "volumes"
     t.string "issues"
     t.string "years"
-    t.index ["item_id"], name: "index_loans_on_item_id"
     t.index ["ledger_id"], name: "index_loans_on_ledger_id"
     t.index ["representative_id"], name: "index_loans_on_representative_id"
     t.index ["shareholder_id"], name: "index_loans_on_shareholder_id"
+    t.index ["work_id"], name: "index_loans_on_work_id"
   end
 
   create_table "patrons", force: :cascade do |t|
@@ -84,6 +78,23 @@ ActiveRecord::Schema.define(version: 20171018150016) do
     t.string "label"
     t.integer "drupal_node_id"
     t.string "drupal_node_type", default: "taxonomy"
+  end
+
+  create_table "subjects_works", id: false, force: :cascade do |t|
+    t.integer "work_id"
+    t.integer "subject_id"
+    t.index ["subject_id"], name: "index_subjects_works_on_subject_id"
+    t.index ["work_id"], name: "index_subjects_works_on_work_id"
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.integer "author_id"
+    t.string "title"
+    t.string "format"
+    t.integer "number"
+    t.string "drupal_node_type", default: "node"
+    t.integer "drupal_node_id"
+    t.index ["author_id"], name: "index_works_on_author_id"
   end
 
 end
