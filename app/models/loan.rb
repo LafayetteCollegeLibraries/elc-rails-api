@@ -4,16 +4,16 @@ class Loan < ApplicationRecord
   include Drupal
   include Randomizable
 
-  belongs_to :shareholder, class_name: 'Patron', optional: true
-  belongs_to :representative, class_name: 'Patron', optional: true
-  belongs_to :ledger
-  has_and_belongs_to_many :items
-
   scope :for_checkout_date, ->(date) { where(checkout_date: date) }
   scope :for_item, ->(item) { where(item: item) }
   scope :for_patron, ->(person) { where(representative: person).or(where(shareholder: person)) }
   scope :for_representative, -> (person) { where(representative: person) }
   scope :for_shareholder, -> (person) { where(shareholder: person) }
+
+  belongs_to :shareholder, class_name: 'Patron', optional: true
+  belongs_to :representative, class_name: 'Patron', optional: true
+  belongs_to :ledger
+  has_and_belongs_to_many :items
 
   def checkout_date=(date)
     super(ensure_datetime(date))
@@ -41,8 +41,8 @@ class Loan < ApplicationRecord
     "https://elc.lafayette.edu/collections/eastonlibrary/#{ledger_filename}"
   end
 
-  def works
-    items.map(&:work).uniq
+  def work
+    items.first.work
   end
 
   class << self

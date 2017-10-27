@@ -4,12 +4,14 @@ class Work < ApplicationRecord
   
   belongs_to :author, optional: true
   has_and_belongs_to_many :subjects
+  has_many :items
+  has_many :loans, through: :items
 
   scope :search, -> (query) { where("title like ?", "%#{query}%") }
 
-  # def loan_history
-  #   Loan.for_item(id)
-  # end
+  def full_title
+    self[:title]
+  end
 
   # this is just a band-aid for now
   def title
@@ -17,10 +19,6 @@ class Work < ApplicationRecord
       .gsub('&amp;', '&')
       .gsub("(#{format} #{number})", '')
       .strip
-  end
-
-  def full_title
-    self[:title]
   end
 
   class << self
