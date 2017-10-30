@@ -1,0 +1,26 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+frankenstein:
+  title: "Frankenstein: or the Modern Prometheus (Duodecimo 123)"
+  author: mary_shelley
+  subjects: fiction
+  format: Duodecimo
+  number: 123
+
+lunch_poems:
+  title: "Lunch Poems (Octavo 10)"
+  author: frank_o_hara
+  subjects: fiction, poetry
+  format: Octavo
+  number: 10
+
+scary_stories:
+  title: Scary Stories to Tell in the Dark (Quatro 30)
+  author: alvin_schwartz
+  subjects: fiction
+  format: Quatro
+  number: 30
+
+no_author_assigned:
+  title: "No Author Assigned"
+  subjects: fiction

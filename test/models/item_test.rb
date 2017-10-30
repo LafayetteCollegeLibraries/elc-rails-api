@@ -1,32 +1,25 @@
 require 'test_helper'
 
 class ItemTest < ActiveSupport::TestCase
-  test "an item may contain an author" do
-    item = items(:lunch_poems)
-    assert item.author.present?
-    assert_equal "O'Hara, Frank", item.author.name
-    assert item.author.is_a? Author
-  end
-
-  test "an item may sometimes not contain an author" do
-    item = items(:no_author_assigned)
-    assert item.author.blank?
-  end
-
-  test "an item may have subjects" do
+  test "an item contains a parent work" do
     item = items(:frankenstein)
-    assert item.subjects.present?
-    assert item.subjects.first.is_a? Subject
+    work = works(:frankenstein)
+    
+    assert item.respond_to? :work
+    assert_equal work, item.work
   end
 
-  test "an item may have multiple subjects" do
+  test "a item responds with its work's properties" do
     item = items(:lunch_poems)
-    assert item.subjects.present?
-    assert item.subjects.length > 1
+    work = works(:lunch_poems)
+
+    assert_equal item.title, work.title
+    assert_equal item.full_title, work.full_title
+    assert_equal item.author, work.author
+    assert_equal item.subjects, work.subjects
   end
 
-  test "an item may have no subjects" do
-    item = Item.new(title: "No Subjects: the True Story")
-    assert item.subjects.empty?
+  test "an item has associated loans" do
+    assert_not items(:lunch_poems).loans.empty?
   end
 end

@@ -32,20 +32,13 @@ class LoanTest < ActiveSupport::TestCase
     assert loan.label.is_a? String
 
     assert loan.label.include? loan.loaned_to
-    assert loan.label.include? loan.item.title
+    assert loan.label.include? loan.work.title
   end
 
   test "`loaned_to` returns the representative's name if present" do
     loan = loans(:scary_stories)
     tommy = patrons(:tommy_doyle)
     assert_equal tommy.name, loan.loaned_to
-  end
-
-  test "`for_item` search returns loans with provided item" do
-    lunch_poems = items(:lunch_poems)
-
-    assert Loan.count > 1
-    assert Loan.for_item(lunch_poems).count == 1
   end
 
   test "`for_patron` returns loans where patron is shareholder or representative" do
@@ -57,9 +50,13 @@ class LoanTest < ActiveSupport::TestCase
   end
 
   test "`for_representative` returns loans where patron is the representative" do
-    lauries_rep_loans = Loan.for_representative(patrons(:laurie_strode))
-    tommys_rep_loans = Loan.for_representative(patrons(:tommy_doyle))
-
-    assert_equal lauries_rep_loans.count, tommys_rep_loans.count
+    laurie = patrons(:laurie_strode)
+    tommy = patrons(:tommy_doyle)
+    
+    lauries_rep_loans = Loan.for_representative(laurie)
+    tommys_rep_loans = Loan.for_representative(tommy)
+    
+    lauries_rep_loans.each { |loan| assert_equal loan.representative, laurie }
+    tommys_rep_loans.each { |loan| assert_equal loan.representative, tommy }
   end
 end

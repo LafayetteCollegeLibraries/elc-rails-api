@@ -20,7 +20,7 @@ class Loan < ApplicationRecord
   end
 
   def label
-    "#{loaned_to} borrowed \"#{works.map(&:title).join(', ')}\" on #{checkout_date.strftime('%A, %B %-d, %Y')}"
+    "#{loaned_to} borrowed \"#{work.title}\" on #{checkout_date.strftime('%A, %B %-d, %Y')}"
   end
 
   def loaned_to

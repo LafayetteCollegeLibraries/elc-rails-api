@@ -1,20 +1,16 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 frankenstein:
-  title: "Frankenstein: or the Modern Prometheus"
-  author: mary_shelley
-  subjects: fiction
+  work: frankenstein
+  volume: "1"
 
 lunch_poems:
-  title: "Lunch Poems"
-  author: frank_o_hara
-  subjects: fiction, poetry
+  work: lunch_poems
+  volume: "1"
+  year: "1964"
 
-scary_stories:
-  title: Scary Stories to Tell in the Dark
-  author: alvin_schwartz
-  subjects: fiction
+scary_stories_1:
+  work: scary_stories
+  volume: "1"
 
-no_author_assigned:
-  title: "No Author Assigned"
-  subjects: fiction
+scary_stories_2:
+  work: scary_stories
+  volume: "2"
