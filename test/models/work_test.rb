@@ -29,4 +29,13 @@ class WorkTest < ActiveSupport::TestCase
     work = Work.new(title: "No Subjects: the True Story")
     assert work.subjects.empty?
   end
+
+  test "a work has loans via its items" do
+    work = works(:scary_stories)
+    item_1 = items(:scary_stories_1)
+    item_2 = items(:scary_stories_2)
+
+    expected_loans = item_1.loans + item_2.loans
+    assert_equal expected_loans, work.loans
+  end
 end
