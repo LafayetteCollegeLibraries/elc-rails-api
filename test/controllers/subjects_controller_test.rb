@@ -51,7 +51,9 @@ class SubjectsControllerTest < ActionDispatch::IntegrationTest
   # /subjects/:id
 
   test "single subject has `id` and `label`" do
-    get "/subjects/1"
+    fiction = subjects(:fiction)
+
+    get "/subjects/#{fiction.id}"
     response = JSON.parse @response.body
 
     assert response.key? 'id'
