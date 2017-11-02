@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  resources :authors, :items, :patrons, :subjects, only: [:index, :show] do
+  resources :authors, :patrons, :subjects, :works, only: [:index, :show] do
     collection do
       get 'search'
     end
