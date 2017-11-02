@@ -8,6 +8,8 @@ class Work < ApplicationRecord
   has_many :loans, through: :items
 
   scope :search, -> (query) { where("title like ?", "%#{query}%") }
+  scope :by_author, -> (author) { where("author_id = ?", author) }
+  scope :by_subject, -> (sub) { Subject.find(sub).works }
 
   def full_title
     self[:title]

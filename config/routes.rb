@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :authors, :subjects, only: [:show] do
+    resources :works, only: [:index]
+  end
+
   resources :loans, only: [:index, :show]
   
   resources :ledgers, only: [:index, :show] do

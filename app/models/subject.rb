@@ -2,7 +2,7 @@ class Subject < ApplicationRecord
   include Drupal
   include Randomizable
   
-  has_and_belongs_to_many :items
+  has_and_belongs_to_many :works
 
   scope :search, -> (query) { where("label like ?", "%#{query}%") }
 
