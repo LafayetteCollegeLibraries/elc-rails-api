@@ -4,8 +4,8 @@ class Loan < ApplicationRecord
   include Drupal
   include Randomizable
 
-  scope :for_checkout_date, ->(date) { where(checkout_date: date) }
-  scope :for_item, ->(item) { where(item: item) }
+  scope :for_checkout_date, -> (date) { where(checkout_date: date) }
+  scope :for_item, -> (item) { where(item: item) }
   scope :for_representative, -> (person) { where(representative: person) }
   scope :for_shareholder, -> (person) { where(shareholder: person) }
 
@@ -16,6 +16,18 @@ class Loan < ApplicationRecord
 
   def checkout_date=(date)
     super(ensure_datetime(date))
+  end
+
+  def issues_borrowed
+    items.map(&:issue).reject(&:blank?)
+  end
+
+  def volumes_borrowed
+    items.map(&:volume).reject(&:blank?)
+  end
+
+  def years_borrowed
+    items.map(&:year).reject(&:blank?)
   end
 
   def label

@@ -59,4 +59,40 @@ class LoanTest < ActiveSupport::TestCase
     lauries_rep_loans.each { |loan| assert_equal loan.representative, laurie }
     tommys_rep_loans.each { |loan| assert_equal loan.representative, tommy }
   end
+
+  test 'returns the issues borrowed with `loan.issues_borrowed`' do
+    work = Work.new(title: 'New Work')
+    items = [
+      Item.new(issue: '1', work: work),
+      Item.new(issue: '2', work: work),
+    ]
+
+    loan = Loan.new(items: items)
+
+    assert_equal ['1', '2'], loan.issues_borrowed
+  end
+
+  test 'returns the volumes borrowed with `loan.volumes_borrowed`' do
+    work = Work.new(title: 'New Work')
+    items = [
+      Item.new(volume: '1', work: work),
+      Item.new(volume: '2', work: work)
+    ]
+
+    loan = Loan.new(items: items)
+
+    assert_equal ['1', '2'], loan.volumes_borrowed
+  end
+
+  test 'returns the years borrowed with `loan.years_borrowed`' do
+    work = Work.new(title: 'New Work')
+    items = [
+      Item.new(year: '2000', work: work),
+      Item.new(year: '2001', work: work)
+    ]
+
+    loan = Loan.new(items: items)
+
+    assert_equal ['2000', '2001'], loan.years_borrowed
+  end
 end
