@@ -18,6 +18,10 @@ class Loan < ApplicationRecord
     super(ensure_datetime(date))
   end
 
+  def items_borrowed
+    items.count
+  end
+
   def issues_borrowed
     items.map(&:issue).reject(&:blank?)
   end

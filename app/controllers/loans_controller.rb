@@ -1,9 +1,15 @@
 class LoansController < ApplicationController
   def index
-    @ledger = Ledger.find(params[:ledger_id]) if params[:ledger_id]
-    
-    @loans = (@ledger ? @ledger.loans : Loan)
-             .paginate(page: params[:page], per_page: params[:per_page])
+    ledger_id = params[:ledger_id]
+    page = params[:page]
+    per_page = params[:per_page]
+
+    if ledger_id
+      @ledger = Ledger.find(ledger_id)
+      @loans = @ledger.loans.paginate(page: page, per_page: per_page)
+    else
+      @loans = Loan.paginate(page: params[:page], per_page: params[:per_page])
+    end
   end
 
   # TODO: how can we map this in routes?

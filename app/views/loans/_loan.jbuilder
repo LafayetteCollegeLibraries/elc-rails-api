@@ -1,13 +1,12 @@
 json.extract! loan, :id, :label
 
-json.item do
-  json.partial! 'items/item', item: loan.item
-
-  # TODO: implement these fields on the loan
-  json.volumes loan.volumes
-  json.issues loan.issues
-  json.years loan.years
+json.work do
+  json.partial! 'works/work', work: loan.work
 end
+
+json.volumes loan.volumes_borrowed
+json.issues loan.issues_borrowed
+json.years loan.years_borrowed
 
 json.checkout_date loan.checkout_date
 json.return_date loan.return_date
@@ -26,10 +25,4 @@ json.shareholder do
   else
     json.null!
   end
-end
-
-json.ledger do
-  json.id loan.ledger.id
-  json.filename loan.ledger_filename
-  json.url loan.view_ledger_url
 end
