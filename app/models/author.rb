@@ -2,7 +2,7 @@ class Author < ApplicationRecord
   include Drupal
   include Randomizable
 
-  has_many :works
+  has_and_belongs_to_many :works
 
   scope :search, -> (query) { where("name like ?", "%#{query}%") }
 

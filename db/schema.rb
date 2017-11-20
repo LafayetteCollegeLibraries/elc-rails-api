@@ -10,12 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171027181244) do
+ActiveRecord::Schema.define(version: 20171120181815) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
     t.integer "drupal_node_id"
     t.string "drupal_node_type", default: "node"
+  end
+
+  create_table "authors_works", id: false, force: :cascade do |t|
+    t.integer "author_id", null: false
+    t.integer "work_id", null: false
+    t.index ["author_id", "work_id"], name: "index_authors_works_on_author_id_and_work_id"
+    t.index ["work_id", "author_id"], name: "index_authors_works_on_work_id_and_author_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -94,14 +101,12 @@ ActiveRecord::Schema.define(version: 20171027181244) do
   end
 
   create_table "works", force: :cascade do |t|
-    t.integer "author_id"
     t.string "title"
     t.string "format"
     t.integer "number"
     t.string "drupal_node_type", default: "node"
     t.integer "drupal_node_id"
     t.boolean "missing_from_csv", default: false
-    t.index ["author_id"], name: "index_works_on_author_id"
   end
 
 end

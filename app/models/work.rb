@@ -2,7 +2,7 @@ class Work < ApplicationRecord
   include Drupal
   include Randomizable
   
-  belongs_to :author, optional: true
+  has_and_belongs_to_many :authors
   has_and_belongs_to_many :subjects
   has_many :items
   has_many :loans, through: :items
@@ -29,11 +29,11 @@ class Work < ApplicationRecord
 
       return work unless work.new_record?
 
-      author_id = row['author_node_id'].to_i
-      subject_ids = (row['subject_node_ids'] || '').split(';')
+      author_ids = (row['author_node_id'] || '').split(';').map(&:to_i)
+      subject_ids = (row['subject_node_ids'] || '').split(';').map(&:to_i)
 
       work.title = row['item_title']
-      work.author = Author.find_by_drupal_id(author_id)
+      work.authors = Author.where(drupal_node_id: author_ids)
       work.subjects = Subject.where(drupal_node_id: subject_ids)
 
       work.format = row['format']
