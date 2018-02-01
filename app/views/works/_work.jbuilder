@@ -1,10 +1,10 @@
 json.extract! work, :id, :title
 
 json.author do
-  if work.author.blank?
-    json.null!
+  if work.authors.blank?
+    json.array! []
   else
-    json.partial! 'authors/author', author: work.author
+    json.array! work.authors, partial: 'authors/author', as: 'author'
   end
 end
 

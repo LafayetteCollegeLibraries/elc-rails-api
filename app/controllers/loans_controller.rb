@@ -1,14 +1,14 @@
 class LoansController < ApplicationController
   def index
     ledger_id = params[:ledger_id]
-    page = params[:page]
-    per_page = params[:per_page]
+    @page = param_page
+    per_page = param_per_page
 
     if ledger_id
       @ledger = Ledger.find(ledger_id)
-      @loans = @ledger.loans.paginate(page: page, per_page: per_page)
+      @loans = @ledger.loans.paginate(page: @page, per_page: @per_page)
     else
-      @loans = Loan.paginate(page: params[:page], per_page: params[:per_page])
+      @loans = Loan.paginate(page: @page, per_page: @per_page)
     end
   end
 
