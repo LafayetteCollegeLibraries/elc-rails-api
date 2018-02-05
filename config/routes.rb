@@ -21,5 +21,6 @@ Rails.application.routes.draw do
 
   resources :works, only: [:index, :show] do
     resources :loans, only: [:index]
+    resources :items, only: [:index]
   end
 end
