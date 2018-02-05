@@ -8,7 +8,9 @@ class Loan < ApplicationRecord
   scope :for_item, -> (item) { where(item: item) }
   scope :for_representative, -> (person) { where(representative: person) }
   scope :for_shareholder, -> (person) { where(shareholder: person) }
-  
+  scope :for_patron, -> (patron) { where(shareholder: patron).or(where(representative: patron)) }
+  scope :for_patron_on_date, -> (patron, date) { where('representative_id = ? AND checkout_date = ?', patron, date) }
+
   # this one is a bit tough because of the many-to-one relationship of
   # items to works and the many-to-one relationship of items to loans.
   # this may be an optimization to-do down the road, but for now It Works.
@@ -81,14 +83,6 @@ class Loan < ApplicationRecord
       loan.save!
 
       loan
-    end
-
-    def for_patron(patron)
-      where(shareholder: patron).or(where(representative: patron))
-    end
-
-    def for_patron_on_date(patron, date)
-      where('representative_id = ? AND checkout_date = ?', patron, date)
     end
   end
 

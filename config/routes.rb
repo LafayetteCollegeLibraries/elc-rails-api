@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     resources :loans, only: [:index, :show]
   end
 
+  resources :patrons, only: [:index, :show] do
+    resources :loans, only: [:index, :show]
+  end
+
   resources :works, only: [:index, :show] do
     resources :loans, only: [:index]
     resources :items, only: [:index]
