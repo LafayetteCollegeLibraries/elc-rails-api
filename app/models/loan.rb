@@ -8,6 +8,11 @@ class Loan < ApplicationRecord
   scope :for_item, -> (item) { where(item: item) }
   scope :for_representative, -> (person) { where(representative: person) }
   scope :for_shareholder, -> (person) { where(shareholder: person) }
+  
+  # this one is a bit tough because of the many-to-one relationship of
+  # items to works and the many-to-one relationship of items to loans.
+  # this may be an optimization to-do down the road, but for now It Works.
+  scope :for_work, -> (work) { work.loans }
 
   belongs_to :shareholder, class_name: 'Patron', optional: true
   belongs_to :representative, class_name: 'Patron', optional: true

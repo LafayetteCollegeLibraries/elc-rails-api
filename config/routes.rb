@@ -18,4 +18,8 @@ Rails.application.routes.draw do
   resources :ledgers, only: [:index, :show] do
     resources :loans, only: [:index, :show]
   end
+
+  resources :works, only: [:index, :show] do
+    resources :loans, only: [:index]
+  end
 end

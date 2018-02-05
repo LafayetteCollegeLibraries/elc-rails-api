@@ -3,7 +3,7 @@ json.data do
 end
 
 json.partial! 'partials/meta', locals: {
-  total: @ledger ? @ledger.loans.count : Loan.count,
-  page: (params[:page] || 1).to_i,
-  per_page: (params[:per_page] || WillPaginate.per_page).to_i,
+  total: @ledger ? @ledger.loans.count : @loans.count,
+  page: @page.to_i,
+  per_page: @per_page.to_i,
 }
