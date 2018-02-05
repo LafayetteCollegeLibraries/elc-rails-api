@@ -3,7 +3,7 @@ json.data do
 end
 
 json.partial! 'partials/meta', locals: {
-  total: @count || Work.count,
+  total: @works.count,
   page: @page,
   per_page: @per_page,
 }
