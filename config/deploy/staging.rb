@@ -1,3 +1,6 @@
+set :rails_env, 'development'
+set :bundle_without, [:test]
+
 server "elc.stage.lafayette.edu", user: "malantoa", roles: %w{app web db}
 
 # server-based syntax

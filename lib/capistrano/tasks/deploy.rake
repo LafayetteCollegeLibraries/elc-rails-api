@@ -14,11 +14,11 @@ namespace :deploy do
   task :upload_secrets_yml do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
-      upload! StringIO.new(File.read("config/secrets.yml")), "#{shared_path}/config/database.yml"
+      upload! StringIO.new(File.read("config/secrets.yml")), "#{shared_path}/config/secrets.yml"
     end
   end
 
-  before 'deploy:symlink:linked_files', 'deploy:upload_database_yml'
-  before 'deploy:symlink:linked_files', 'deploy:upload_secrets_yml'
+  before 'deploy:check:linked_files', 'deploy:upload_database_yml'
+  before 'deploy:check:linked_files', 'deploy:upload_secrets_yml'
 end
 
