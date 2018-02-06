@@ -46,5 +46,12 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # add pagination
 gem 'will_paginate'
 
-# add capistrano for deployment
-gem 'capistrano'
+group :development do
+  # add capistrano for deployment
+  gem 'capistrano'
+
+  gem 'capistrano-puma', require: false
+  gem 'capistrano-rails', '~> 1.3', require: false
+  gem 'capistrano-bundler', '~> 1.1.0', require: false
+  gem 'capistrano-rvm'
+end
