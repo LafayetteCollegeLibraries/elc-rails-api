@@ -24,3 +24,7 @@
 
 # ignore data files for now
 data
+
+# ignore database + secret configs
+/config/database.yml
+/config/secrets.yml
