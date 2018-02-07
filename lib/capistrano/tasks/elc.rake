@@ -4,13 +4,21 @@ namespace :elc do
 
   task :invoke_seed_db do
     on roles(:app) do
-      execute :rails, 'db:seed'
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'db:seed'
+        end
+      end
     end
   end
 
   task :invoke_import_data do
     on roles(:app) do
-      execute :rails, "elc:import_remote git_remote=#{fetch(:data_git_source)}"
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "elc:import_remote git_remote=#{fetch(:data_git_source)}"
+        end
+      end
     end
   end
 end
