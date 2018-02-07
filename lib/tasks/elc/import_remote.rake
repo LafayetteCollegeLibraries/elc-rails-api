@@ -11,10 +11,10 @@ namespace :elc do
     data_path = Rails.root.join('data')
 
     FileUtils.rm_rf(tmp_path)
-    fail("unable to clone repository") unless system :git, "clone #{ENV['git_source']} #{tmp_path}"
+
+    system "git clone #{ENV['git_source']} #{tmp_path}"
 
     FileUtils.mkdir_p(data_path) unless Dir.exist?(data_path)
-
     tmp_data_path = File.join(tmp_path, 'data')
 
     Dir.foreach(tmp_data_path) do |file|
