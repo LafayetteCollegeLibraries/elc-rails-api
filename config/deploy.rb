@@ -6,9 +6,9 @@ set :repo_url, "git@github.com:LafayetteCollegeLibraries/elc-rails-api.git"
 set :data_git_source, "git@github.com:LafayetteCollegeLibraries/easton-library-company-data.git"
 set :deploy_to, "/opt/elc-api"
 
-# rvm config
-set :rvm_type, 'user'
-set :rvm_ruby_version, '2.4.3'
+# rbenv config
+set :rbenv_type, :user
+set :rbenv_ruby, '2.4.3'
 
 # rails config
 set :conditionally_migrate, false

@@ -52,6 +52,6 @@ group :development do
 
   gem 'capistrano-puma', require: false
   gem 'capistrano-rails', '~> 1.3', require: false
-  gem 'capistrano-bundler', '~> 1.1.0', require: false
-  gem 'capistrano-rvm'
+  gem 'capistrano-bundler', '~> 1.3', require: false
+  gem 'capistrano-rbenv', '~> 2.1'
 end
