@@ -1,7 +1,7 @@
 require 'csv'
 require 'date'
 
-namespace :el_camino do
+namespace :elc do
   desc "import all items"
   task import: %w[
     import:subjects
@@ -16,7 +16,7 @@ namespace :el_camino do
       desc "import #{type}"
       task "#{type}" => :environment do
         model = type.titlecase.singularize.constantize
-        file_path = File.expand_path("data/#{type}.csv", Rails.root)
+        file_path = Rails.root.join("data", "#{type}.csv")
         CSV.foreach(file_path, headers: true) {|row| model.create_from_csv_row!(row)}
 
         puts "Added #{model.count} #{type}"
