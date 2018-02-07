@@ -4,15 +4,15 @@ namespace :elc do
 
   task :invoke_seed_db do
     on roles(:app) do
-      execute "bundle exec rails db:seed"
+      execute :rails, 'db:seed'
     end
   end
 
   task :invoke_import_data do
     on roles(:app) do
-      execute "bundle exec rails elc:import_remote git_remote=#{fetch(:data_git_source)}"
+      execute :rails, "elc:import_remote git_remote=#{fetch(:data_git_source)}"
     end
   end
-
-  after :deploy, 'elc:seed_and_import'
 end
+
+after :deploy, 'elc:seed_and_import'

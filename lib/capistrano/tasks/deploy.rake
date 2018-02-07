@@ -5,7 +5,7 @@ namespace :deploy do
   desc "upload database.yml"
   task :upload_database_yml do
     on roles(:app) do
-      execute "mkdir -p #{shared_path}/config"
+      execute :mkdir, "-p #{shared_path}/config"
       src_path = File.expand_path('../../../../config/database.yml', __FILE__)
       upload! StringIO.new(File.read(src_path)), "#{shared_path}/config/database.yml"
     end
@@ -14,7 +14,7 @@ namespace :deploy do
   desc "upload secrets.yml"
   task :upload_secrets_yml do
     on roles(:app) do
-      execute "mkdir -p #{shared_path}/config"
+      execute :mkdir, "-p #{shared_path}/config"
       src_path = File.expand_path('../../../../config/secrets.yml', __FILE__)
       upload! StringIO.new(File.read(src_path)), "#{shared_path}/config/secrets.yml"
     end
