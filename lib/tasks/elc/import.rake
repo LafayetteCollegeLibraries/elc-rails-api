@@ -1,7 +1,7 @@
 require 'csv'
 require 'date'
 
-namespace :el_camino do
+namespace :elc do
   desc "import all items"
   task import: %w[
     import:subjects
