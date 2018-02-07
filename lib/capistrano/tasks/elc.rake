@@ -16,7 +16,7 @@ namespace :elc do
     on roles(:app) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "elc:import_remote git_remote=#{fetch(:data_git_source)}"
+          execute :rake, "elc:import_remote git_source=#{fetch(:data_git_source)}"
         end
       end
     end
