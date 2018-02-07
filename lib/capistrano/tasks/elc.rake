@@ -10,8 +10,7 @@ namespace :elc do
 
   task :invoke_import_data do
     on roles(:app) do
-      data_git_source = 'git@github.com:LafayetteCollegeLibraries/easton-library-company-data'
-      execute "bundle exec rails elc:import_remote git_remote=#{data_git_source}"
+      execute "bundle exec rails elc:import_remote git_remote=#{fetch(:data_git_source)}"
     end
   end
 
