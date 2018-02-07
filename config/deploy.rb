@@ -3,7 +3,7 @@ lock "~> 3.10.1"
 
 set :application, "elc-api"
 set :repo_url, "git@github.com:LafayetteCollegeLibraries/elc-rails-api.git"
-set :data_git_source, "git@github.com:LafayetteCollegeLibraries/easton-library-company-data"
+set :data_git_source, "git@github.com:LafayetteCollegeLibraries/easton-library-company-data.git"
 set :deploy_to, "/opt/elc-api"
 
 # rvm config
