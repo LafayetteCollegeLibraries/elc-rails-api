@@ -22,5 +22,3 @@ PersonType.find_or_create_by(label: 'Representative', drupal_node_id: 669)
 PersonType.find_or_create_by(label: 'Author', drupal_node_id: 230)
 
 puts "Added #{PersonType.count} person types"
-
-Rake::Task['el_camino:import'].invoke
