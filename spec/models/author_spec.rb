@@ -19,13 +19,8 @@ RSpec.describe Author do
   end
 
   describe '.create_from_csv_row!' do
-    # can't use let(:author) = Author.create_from_csv_row!(row)
-    # because transactions are limited per test by default
-    # (see: https://relishapp.com/rspec/rspec-rails/v/3-7/docs/model-specs/transactional-examples)
-    it 'persists the Author to the database' do
-      created = Author.create_from_csv_row!(row)
-      expect(Author.find_by(drupal_node_id: node_id)).to eq created
-    end
+    subject { Author.create_from_csv_row!(row) }
+    its(:new_record?) { should be false }
   end
 
   its :types { should contain_exactly 'Author' }

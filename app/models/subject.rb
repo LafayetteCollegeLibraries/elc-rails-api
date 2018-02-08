@@ -2,6 +2,8 @@ class Subject < ApplicationRecord
   include Drupal
   include Randomizable
   
+  attribute :drupal_node_type, :string, default: 'taxonomy'
+
   has_and_belongs_to_many :works
 
   scope :search, -> (query) { where("label like ?", "%#{query}%") }
