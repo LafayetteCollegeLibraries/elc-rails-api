@@ -1,8 +1,9 @@
 require 'csv'
 
 RSpec.describe Subject do
-  let(:taxonomy_id) { 10 }
-  let(:label) { 'Subject Label' }
+  let(:attrs) { attributes_for(:subject) }
+  let(:taxonomy_id) { attrs[:drupal_node_id] }
+  let(:label) { attrs[:label] }
   let(:row) do
     CSV::Row.new(
       ['taxonomy_id', 'label'],

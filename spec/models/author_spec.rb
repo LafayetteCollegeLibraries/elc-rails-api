@@ -1,8 +1,9 @@
 require 'csv'
 
 RSpec.describe Author do
-  let(:node_id) { '1234' }
-  let(:author_name) { 'Author Name' }
+  let(:attrs) { attributes_for(:author) }
+  let(:node_id) { attrs[:drupal_node_id] }
+  let(:author_name) { attrs[:name] }
   let(:row) do
     CSV::Row.new(
       ['node_id', 'name'],
