@@ -1,4 +1,3 @@
-require 'rails_helper'
 require 'csv'
 
 RSpec.describe Author do
