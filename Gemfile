@@ -55,3 +55,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.3', require: false
   gem 'capistrano-rbenv', '~> 2.1'
 end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.6'
+end
