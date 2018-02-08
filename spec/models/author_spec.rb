@@ -11,23 +11,11 @@ RSpec.describe Author do
   end
 
   describe '.initialize_from_csv_row' do
-    let(:author) { Author.initialize_from_csv_row(row) }
+    subject { Author.initialize_from_csv_row(row) }
 
-    it 'adds the value from the `name` field' do
-      expect(author.name).to eq author_name
-    end
-
-    it 'sets the `node_id` to :drupal_node_id' do
-      expect(author.drupal_node_id).to eq node_id.to_i
-    end
-
-    it 'assigns the :drupal_node_type of `node`' do
-      expect(author.drupal_node_type).to eq 'node'
-    end
-
-    it 'does not persist the Author to the database' do
-      expect(author.new_record?).to be true
-    end
+    its(:name) { should eq author_name }
+    its(:drupal_node_id) { should eq node_id.to_i }
+    its(:new_record?) { should be true }
   end
 
   describe '.create_from_csv_row!' do
@@ -40,9 +28,6 @@ RSpec.describe Author do
     end
   end
 
-  describe '#types' do
-    it 'contains only "Author"' do
-      expect(Author.initialize_from_csv_row(row).types).to contain_exactly('Author')
-    end
-  end
+  its :types { should contain_exactly 'Author' }
+  its :drupal_node_type { should eq 'node' }
 end

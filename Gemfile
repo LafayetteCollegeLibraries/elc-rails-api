@@ -58,4 +58,5 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'
+  gem 'rspec-its', '~> 1.1'
 end
