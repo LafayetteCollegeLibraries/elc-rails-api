@@ -25,8 +25,7 @@
 # ignore data files for now
 data
 
-# ignore database + secret configs
-/config/database.yml
+# ignore secret configs
 /config/secrets.yml
 
 # ignore test coverage files
