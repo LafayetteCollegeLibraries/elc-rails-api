@@ -19,7 +19,7 @@ class Patron < ApplicationRecord
   end
 
   def types
-    self.person_types.map(&:label)
+    person_types.map(&:label)
   end
 
   class << self
@@ -27,14 +27,18 @@ class Patron < ApplicationRecord
       patron = find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
       return patron unless patron.new_record?
 
-      type_node_ids = row['person_type_node_ids']
+      puts row
+
+      type_node_ids = row['person_type_node_ids'].chomp
 
       patron.name = row['name']
       patron.drupal_node_type = 'node'
 
-      patron.person_types = (type_node_ids || '').split(/[,;]\s?/)
+      return patron unless type_node_ids
+
+      patron.person_types = type_node_ids.split(/[,;]\s?/)
                             .map { |id| PersonType.find_by(drupal_node_id: id) }
-                            .reject { |i| i.blank? }
+                            .reject(&:blank?)
       patron
     end
 
