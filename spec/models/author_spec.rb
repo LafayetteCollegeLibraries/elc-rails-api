@@ -26,4 +26,6 @@ RSpec.describe Author do
 
   its :types { should contain_exactly 'Author' }
   its :drupal_node_type { should eq 'node' }
+
+  it { should have_and_belong_to_many :works }
 end

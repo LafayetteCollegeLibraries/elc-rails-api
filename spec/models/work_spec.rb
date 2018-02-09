@@ -38,4 +38,9 @@ RSpec.describe Work do
 
   its(:title) { should_not include "(#{subject.format} #{subject.number})" }
   its(:full_title) { should eq subject[:title] }
+
+  it { should have_and_belong_to_many :authors }
+  it { should have_and_belong_to_many :subjects }
+  it { should have_many :items }
+  it { should have_many(:loans).through(:items) }
 end

@@ -25,4 +25,6 @@ RSpec.describe Subject do
   end
 
   its(:drupal_node_type) { should eq 'taxonomy' }
+
+  it { should have_and_belong_to_many :works }
 end
