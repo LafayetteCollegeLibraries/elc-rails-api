@@ -2,6 +2,8 @@ class Author < ApplicationRecord
   include Drupal
   include Randomizable
 
+  attribute :drupal_node_type, :string, default: 'node'
+
   has_and_belongs_to_many :works
 
   scope :search, -> (query) { where("name like ?", "%#{query}%") }
@@ -15,10 +17,9 @@ class Author < ApplicationRecord
       author = find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
       return author unless author.new_record?
 
-      author.name = row['name']
-      author.drupal_node_type = 'node'
-
-      author
+      author.tap do |a|
+        a.name = row['name']
+      end
     end
 
     def create_from_csv_row!(row)

@@ -16,3 +16,6 @@ set :conditionally_migrate, false
 # add rails shared dirs/files
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets'
 append :linked_files, 'config/database.yml', 'config/secrets.yml'
+
+# option to deploy without importing data
+set :skip_data_import, false

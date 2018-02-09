@@ -25,10 +25,6 @@ class Loan < ApplicationRecord
     super(ensure_datetime(date))
   end
 
-  def items_borrowed
-    items.count
-  end
-
   def issues_borrowed
     items.map(&:issue).reject(&:blank?)
   end
@@ -67,24 +63,15 @@ class Loan < ApplicationRecord
     items.first.work
   end
 
-  class << self
-    def initialize_from_csv_row(row)
-      loan = find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
-      return loan unless loan.new_record?
+  # TODO: extract a bunch of the work being done on the ingest script
+  # and perform it in these method (ex. assigning works + patrons)
+  # class << self
+    # def initialize_from_csv_row(row)
+    # end
 
-      loan.label = row['label']
-      loan.drupal_node_type = 'taxonomy'
-
-      loan
-    end
-
-    def create_from_csv_row!(row)
-      loan = initialize_from_csv_row(row)
-      loan.save!
-
-      loan
-    end
-  end
+    # def create_from_csv_row!(row)
+    # end
+  # end
 
   private
     # TODO more thorough checking?
