@@ -1,4 +1,4 @@
-json.extract! work, :id, :title
+json.extract! work, :id, :title, :format, :number
 
 json.author do
   if work.authors.blank?
