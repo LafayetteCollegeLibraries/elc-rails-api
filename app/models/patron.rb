@@ -27,9 +27,7 @@ class Patron < ApplicationRecord
       patron = find_or_initialize_by(drupal_node_id: row['node_id'].to_i)
       return patron unless patron.new_record?
 
-      puts row
-
-      type_node_ids = row['person_type_node_ids'].chomp
+      type_node_ids = row['person_type_node_ids']
 
       patron.name = row['name']
       patron.drupal_node_type = 'node'
