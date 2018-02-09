@@ -12,7 +12,7 @@ FactoryBot.define do
       end
 
       after(:create) do |work, evaluator|
-        create_list(:subjects, evaluator.subject_count, work: work)
+        create_list(:subject, evaluator.subject_count, works: [work])
       end
     end
 
@@ -22,7 +22,7 @@ FactoryBot.define do
       end
 
       after(:create) do |work, evaluator|
-        create_list(:authors, evaluator.author_count, work: work)
+        create_list(:author, evaluator.author_count, works: [work])
       end
     end
   end
