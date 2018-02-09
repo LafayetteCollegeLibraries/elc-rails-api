@@ -5,10 +5,12 @@ namespace :server do
   desc 'start the rails server as a daemon'
   task :start do
     on roles(:app) do
-      pid_path = File.join(shared_path, 'tmp', 'pids', 'server.pid')
-      next if test "[ -f #{pid_path} ]"
+      within release_path do
+        pid_path = File.join(shared_path, 'tmp', 'pids', 'server.pid')
+        next if test "[ -f #{pid_path} ]"
 
-      execute :rails, 'server --daemon --binding=0.0.0.0 --port=3000'
+        execute :rails, 'server --daemon --binding=0.0.0.0 --port=3000'
+      end
     end
   end
 
