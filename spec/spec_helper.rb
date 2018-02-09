@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'factory_bot'
+require 'factory_bot_rails'
 
 if ENV['RAILS_ENV'] == 'test'
   require 'simplecov'
