@@ -13,6 +13,6 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @author = Author.includes(:works).find(params[:id])
+    @author = Author.find(params[:id])
   end
 end
