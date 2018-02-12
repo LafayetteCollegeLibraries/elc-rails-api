@@ -14,6 +14,9 @@ if ENV['COVERAGE'] || ENV['TRAVIS']
   SimpleCov.start 'rails'
 end
 
+# require our helpers
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -72,6 +75,10 @@ RSpec.configure do |config|
   config.after do
     DatabaseCleaner.clean
   end
+
+  config.include Requests::JsonHelpers
+
+  config.render_views = true
 end
 
 Shoulda::Matchers.configure do |config|
