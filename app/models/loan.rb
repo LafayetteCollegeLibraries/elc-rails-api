@@ -2,7 +2,6 @@ require 'date'
 
 class Loan < ApplicationRecord
   include Drupal
-  include Randomizable
 
   scope :for_checkout_date, -> (date) { where(checkout_date: date) }
   scope :for_item, -> (item) { where(item: item) }

@@ -1,6 +1,5 @@
 class Subject < ApplicationRecord
   include Drupal
-  include Randomizable
   
   attribute :drupal_node_type, :string, default: 'taxonomy'
 

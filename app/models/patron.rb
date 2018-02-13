@@ -1,6 +1,5 @@
 class Patron < ApplicationRecord
   include Drupal
-  include Randomizable
 
   has_and_belongs_to_many :person_types
 
