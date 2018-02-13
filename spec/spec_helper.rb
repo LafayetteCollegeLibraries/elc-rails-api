@@ -10,7 +10,7 @@ require 'rspec/rails'
 if ENV['COVERAGE'] || ENV['TRAVIS']
   require 'simplecov'
   require 'coveralls'
-  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter if ENV['TRAVIS']
   SimpleCov.start 'rails'
 end
 
