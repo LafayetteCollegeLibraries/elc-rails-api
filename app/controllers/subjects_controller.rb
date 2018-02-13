@@ -6,8 +6,7 @@ class SubjectsController < ApplicationController
   def search
     @subjects = Subject.search(params[:q])
                        .paginate(page: params[:page], per_page: params[:per_page])
-    @count = @subjects.count
-
+    
     render template: 'subjects/index'
   end
 
