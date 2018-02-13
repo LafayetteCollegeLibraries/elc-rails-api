@@ -18,32 +18,7 @@ class LoansController < ApplicationController
              end.paginate(page: @page, per_page: @per_page)
   end
 
-  # TODO: how can we map this in routes?
-  #
-  # ```
-  # # config/routes.rb
-  # resources :loans do
-  #   get 'random', use 'loans#random'
-  # end
-  # ```
-  #
-  # that will pass the randomly pulled ID to 'loans#show'? something like:
-  #
-  # ```
-  # # app/controllers/loans_controller.rb
-  # # ...
-  # def random
-  #   @loan = Loan.random
-  #   redirect_to @loan
-  # end
-  # ```
   def show
-    id = params[:id]
-
-    if (id == 'random')
-      redirect_to Loan.random
-    else
-      @loan = Loan.find(id)
-    end
+    @loan = Loan.find(params[:id])
   end
 end
