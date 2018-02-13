@@ -1,6 +1,6 @@
 json.extract! work, :id, :title, :format, :number
 
-json.author do
+json.authors do
   if work.authors.blank?
     json.array! []
   else
