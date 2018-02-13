@@ -10,9 +10,4 @@ class Ledger < ApplicationRecord
   def files
     loans.map {|l| l.ledger_filename }.uniq.sort
   end
-
-  # get all of the patrons listed in a ledger
-  def patrons
-    [representatives, shareholders].flatten.uniq.sort
-  end
 end
