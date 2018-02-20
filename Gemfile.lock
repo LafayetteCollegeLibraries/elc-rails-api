@@ -194,6 +194,8 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    rubocop-rspec (1.22.2)
+      rubocop (>= 0.52.1)
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
@@ -267,6 +269,7 @@ DEPENDENCIES
   rspec-its (~> 1.1)
   rspec-rails (~> 3.6)
   rubocop (= 0.52.1)
+  rubocop-rspec
   selenium-webdriver
   shoulda-matchers (~> 3.1)
   simplecov

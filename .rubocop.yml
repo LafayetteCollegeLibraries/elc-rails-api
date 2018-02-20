@@ -1,3 +1,9 @@
+require: rubocop-rspec
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 Rails:
   Enabled: true
 
@@ -5,6 +11,9 @@ Rails/HasAndBelongsToMany:
   Enabled: false
 
 Rails/InverseOf:
+  Enabled: false
+
+RSpec/NestedGroups:
   Enabled: false
 
 Style/Documentation:

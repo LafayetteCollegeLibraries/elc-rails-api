@@ -62,13 +62,11 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 4.0', require: false
   gem 'shoulda-matchers', '~> 3.1'
   gem 'database_cleaner'
+  gem 'rubocop', '0.52.1'
+  gem 'rubocop-rspec'
 end
 
 group :test do
   gem 'simplecov', require: false
   gem 'coveralls', require: false
-end
-
-group :development do
-  gem 'rubocop', '0.52.1'
 end

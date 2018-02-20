@@ -1,114 +1,133 @@
 RSpec.describe LoansController do
-  describe '#index' do
-    after do
-      Loan.destroy_all
-    end
+  let(:loan) { create(:loan) }
 
-    context 'its default behavior' do
+  describe '#index' do
+    context 'when no params passed' do
       before do
         create(:loan)
         get :index
       end
 
-      subject { json }
-      it { should be_a Hash }
-      it { should include *%w(data meta) }
+      describe 'response.body' do
+        subject { json }
+
+        it { is_expected.to be_a Hash }
+        it { is_expected.to include 'data', 'meta' }
+      end
 
       describe "response.body['data']" do
         subject { json['data'] }
-        it { should be_an Array }
-        it { should_not be_empty }
+
+        it { is_expected.to be_an Array }
+        it { is_expected.not_to be_empty }
       end
 
       describe "response.body['meta']" do
         subject { json['meta'] }
-        it { should be_a Hash }
-        it { should include *%w(page total per_page total_pages) }
+
+        it { is_expected.to be_a Hash }
+        it { is_expected.to include 'page', 'total', 'per_page', 'total_pages' }
       end
     end
 
     context 'when :ledger_id passed' do
-      before do
-        loan = create(:loan)
-        ledger = Ledger.create do |l|
-          l.loans << loan
-        end
+      let(:loan) { create(:loan) }
+      let(:ledger) { Ledger.create { |l| l.loans << loan } }
 
+      before do
         get :index, params: { ledger_id: ledger.id }
       end
 
-      subject { json }
-      it { should be_a Hash }
-      it { should include *%w(data meta) }
+      describe 'response.data' do
+        subject { json }
+
+        it { is_expected.to be_a Hash }
+        it { is_expected.to include 'data', 'meta' }
+      end
 
       describe "response.body['data']" do
         subject { json['data'] }
-        it { should be_an Array }
-        its(:length) { should eq 1 }
+
+        it { is_expected.to be_an Array }
+        its(:length) { is_expected.to eq 1 }
       end
     end
 
     context 'when :work_id passed' do
-      before do
-        work = create(:work)
-        loan = create(:loan, items: [create(:item, work: work)])
+      let(:work) { create(:work) }
 
+      before do
+        create(:loan, items: [create(:item, work: work)])
         get :index, params: { work_id: work.id }
       end
 
-      subject { json }
-      it { should be_a Hash }
-      it { should include *%w(data meta) }
+      describe 'response.body' do
+        subject { json }
+
+        it { is_expected.to be_a Hash }
+        it { is_expected.to include 'data', 'meta' }
+      end
 
       describe "response.body['data']" do
         subject { json['data'] }
-        it { should be_an Array }
-        its(:length) { should eq 1 }
+
+        it { is_expected.to be_an Array }
+        its(:length) { is_expected.to eq 1 }
       end
     end
 
     context 'when :patron_id passed + the patron is a shareholder' do
-      before do
-        patron = create(:shareholder)
-        loan = create(:loan, shareholder: patron)
+      let(:patron) { create(:shareholder) }
 
+      before do
+        create(:loan, shareholder: patron)
         get :index, params: { patron_id: patron.id }
       end
 
-      subject { json }
-      it { should be_a Hash }
-      it { should include *%w(data meta) }
+      describe 'response.body' do
+        subject { json }
+
+        it { is_expected.to be_a Hash }
+        it { is_expected.to include 'data', 'meta' }
+      end
 
       describe "response.body['data']" do
         subject { json['data'] }
-        it { should be_an Array }
-        its(:length) { should eq 1 }
+
+        it { is_expected.to be_an Array }
+        its(:length) { is_expected.to eq 1 }
       end
     end
 
     context 'when :patron_id passed + the patron is a representative' do
-      before do
-        patron = create(:representative)
-        loan = create(:loan, representative: patron)
+      let(:patron) { create(:representative) }
 
+      before do
+        create(:loan, representative: patron)
         get :index, params: { patron_id: patron.id }
       end
 
-      subject { json }
-      it { should be_a Hash }
-      it { should include *%w(data meta) }
+      describe 'response.body' do
+        subject { json }
+
+        it { is_expected.to be_a Hash }
+        it { is_expected.to include 'data', 'meta' }
+      end
 
       describe "response.body['data']" do
         subject { json['data'] }
-        it { should be_an Array }
-        its(:length) { should eq 1 }
+
+        it { is_expected.to be_an Array }
+        its(:length) { is_expected.to eq 1 }
       end
     end
   end
 
   describe '#show' do
-    before do
-      @fields = %w(
+    subject { json }
+
+    let(:fields) do
+      %w[
         id
         label
         work
@@ -120,14 +139,15 @@ RSpec.describe LoansController do
         representative
         shareholder
         ledger
-      )
-      @loan = create(:loan)
-      get :show, params: { id: @loan.id }
+      ]
     end
 
-    subject { json }
-    it { should be_a Hash }
-    it { should include *@fields }
-    it { should_not include *%w(drupal_node_id drupal_node_type) }
+    before do
+      get :show, params: { id: loan.id }
+    end
+
+    it { is_expected.to be_a Hash }
+    it { is_expected.to include(*fields) }
+    it { is_expected.not_to include 'drupal_node_id', 'drupal_node_type' }
   end
 end
