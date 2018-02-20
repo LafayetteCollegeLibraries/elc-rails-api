@@ -5,7 +5,7 @@ class Author < ApplicationRecord
 
   has_and_belongs_to_many :works
 
-  scope :search, -> (query) { where("name like ?", "%#{query}%") }
+  scope :search, ->(query) { where('name like ?', "%#{query}%") }
 
   def types
     ['Author']

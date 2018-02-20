@@ -3,7 +3,7 @@ class Patron < ApplicationRecord
 
   has_and_belongs_to_many :person_types
 
-  scope :search, -> (query) { where("name like ?", "%#{query}%") }
+  scope :search, ->(query) { where('name like ?', "%#{query}%") }
 
   def loans
     Loan.for_patron(id)
@@ -33,9 +33,8 @@ class Patron < ApplicationRecord
 
       return patron unless type_node_ids
 
-      patron.person_types = type_node_ids.split(/[,;]\s?/)
-                            .map { |id| PersonType.find_by(drupal_node_id: id) }
-                            .reject(&:blank?)
+      patron.person_types = person_types_by_node_ids(type_node_ids)
+
       patron
     end
 
@@ -44,6 +43,12 @@ class Patron < ApplicationRecord
       patron.save! if patron.new_record?
 
       patron
+    end
+
+    def person_types_by_node_ids(node_ids)
+      node_ids.split(/[,;]\s?/)
+              .map { |id| PersonType.find_by(drupal_node_id: id) }
+              .reject(&:blank?)
     end
   end
 end

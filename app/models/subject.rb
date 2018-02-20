@@ -1,11 +1,11 @@
 class Subject < ApplicationRecord
   include Drupal
-  
+
   attribute :drupal_node_type, :string, default: 'taxonomy'
 
   has_and_belongs_to_many :works
 
-  scope :search, -> (query) { where("label like ?", "%#{query}%") }
+  scope :search, ->(query) { where('label like ?', "%#{query}%") }
 
   class << self
     def initialize_from_csv_row(row)

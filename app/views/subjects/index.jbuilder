@@ -1,4 +1,4 @@
-json.data do 
+json.data do
   json.array! @subjects, partial: 'subjects/subject', as: :subject
 end
 

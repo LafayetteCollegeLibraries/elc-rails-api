@@ -1,0 +1,11 @@
+Rails:
+  Enabled: true
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
