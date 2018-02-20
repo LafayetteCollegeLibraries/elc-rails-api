@@ -68,3 +68,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'coveralls', require: false
 end
+
+group :development do
+  gem 'rubocop', '0.52.1'
+end
