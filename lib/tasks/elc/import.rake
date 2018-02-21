@@ -2,7 +2,7 @@ require 'csv'
 require 'date'
 
 namespace :elc do
-  desc "import all items"
+  desc 'import all items'
   task import: %w[
     import:subjects
     import:authors
@@ -12,29 +12,33 @@ namespace :elc do
   ]
 
   namespace :import do
-    %w(subjects authors patrons works).each do |type|
+    %w[subjects authors patrons works].each do |type|
       desc "import #{type}"
-      task "#{type}" => :environment do
+      task type.to_s => :environment do
         model = type.titlecase.singularize.constantize
-        file_path = Rails.root.join("data", "#{type}.csv")
-        CSV.foreach(file_path, headers: true) {|row| model.create_from_csv_row!(row)}
+        file_path = Rails.root.join('data', "#{type}.csv")
+
+        CSV.foreach(file_path, headers: true) do |row|
+          model.create_from_csv_row!(row)
+        end
 
         puts "Added #{model.count} #{type}"
       end
     end
 
-    desc "imports loans + items"
-    task :loans => :environment do
+    desc 'imports loans + items'
+    task loans: :environment do
       # create the embodied_by dictionary
-      EMBODIED_BY = {}
-      embodied_by_path = File.expand_path('data/item-embodies-work.csv', Rails.root)
+      embodied_by = {}
+      embodied_by_path = Rails.root.join('data', 'item-embodies-work.csv')
+
       CSV.foreach(embodied_by_path, headers: true) do |row|
-        EMBODIED_BY[row['item_node_id'].to_i] = row['work_node_id'].to_i
+        embodied_by[row['item_node_id'].to_i] = row['work_node_id'].to_i
       end
 
       (1..5).each do |ledger_id|
         csv_file_name = "loans-ledger-#{ledger_id}.csv"
-        csv_path = File.expand_path("data/#{csv_file_name}", Rails.root)
+        csv_path = Rails.root.join('data', csv_file_name)
         ledger = Ledger.find(ledger_id)
         line_no = 1
         works_created = 0
@@ -44,7 +48,7 @@ namespace :elc do
 
           node_id = row['node_id'].to_i
           loan = Loan.find_or_initialize_by(drupal_node_id: node_id)
-        
+
           next unless loan.new_record?
           next if row['item_title'].blank?
 
@@ -69,9 +73,9 @@ namespace :elc do
           loan.ledger = ledger
 
           work_title = row['item_title']
-                        .gsub(/\s?\[vol\. \d+\]\s?/i, ' ')
-                        .gsub(/&quot;/, '"')
-                        .gsub(/&amp;/, '&')
+                       .gsub(/\s?\[vol\. \d+\]\s?/i, ' ')
+                       .gsub(/&quot;/, '"')
+                       .gsub(/&amp;/, '&')
 
           work = Work.find_by(title: work_title)
 
@@ -80,7 +84,7 @@ namespace :elc do
           if work.blank?
             work = Work.create do |w|
               w.title = work_title
-              w.drupal_node_id = EMBODIED_BY[work_id] || work_id
+              w.drupal_node_id = embodied_by[work_id] || work_id
               w.missing_from_csv = true
             end
 
@@ -96,8 +100,8 @@ namespace :elc do
 
           if volumes.present? && volumes.length
             items = volumes.each_with_index.inject([]) do |out, (v, i)|
-              issue = issues[i] unless issues.blank?
-              year = years[i] unless years.blank?
+              issue = issues[i] if issues.present?
+              year = years[i] if years.present?
               out << Item.find_or_create_by(
                 work: work,
                 volume: v,
@@ -106,8 +110,8 @@ namespace :elc do
               )
             end
           else
-            issue = issues[0] unless issues.blank?
-            year = years[0] unless years.blank?
+            issue = issues[0] if issues.present?
+            year = years[0] if years.present?
 
             items = [Item.find_or_create_by(
               work: work,
@@ -126,7 +130,7 @@ namespace :elc do
           end
 
           # TODO: this is a little long-winded + probably could be refactored
-          representative = if (shareholder_id == representative_id)
+          representative = if shareholder_id == representative_id
                              shareholder
                            else
                              patron = Patron.find_or_initialize_by(drupal_node_id: representative_id)
@@ -151,11 +155,11 @@ namespace :elc do
           end
         end
 
-        puts "Added #{ledger.loans.count} loans to ledger #{ledger_id} (#{works_created} work#{works_created == 1 ? '' : 's'} created)"
+        count = ledger.loans.count
+        work_pl = "work#{works_created == 1 ? '' : 's'}"
+        created_msg = "(#{works_created} #{work_pl} created)"
+        puts "Added #{count} loans to ledger #{ledger_id} #{created_msg}"
       end
     end
   end
 end
-
-# Don Quixote [Vol. 2] (Duodecimo 8). [287192] @ loan-ledger-1:165
-

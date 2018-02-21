@@ -19,7 +19,10 @@ namespace :server do
       pid_path = File.join(shared_path, 'tmp', 'pids', 'server.pid')
       next unless test "[ -f #{pid_path} ]"
 
-      execute "((ls #{pid_path} && ps -p `cat #{pid_path}`) && kill -9 `cat #{pid_path}`) || true"
+      cat_pid = "(ls #{pid_path} && ps -p `cat #{pid_path}`)"
+      kill_pid = "kill -9 `cat #{pid_path}`"
+
+      execute "(#{cat_pid} && #{kill_pid}) || true"
       execute "(ls #{pid_path} && /bin/rm #{pid_path}) || true"
     end
   end
