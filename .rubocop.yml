@@ -1,8 +1,20 @@
+inherit_from: .rubocop_todo.yml
+
 require: rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'tmp/**/*'
 
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'lib/tasks/elc/import.rake'
+
+Metrics/LineLength:
+  Exclude:
+    - 'lib/tasks/elc/import.rake'
 
 Rails:
   Enabled: true
@@ -24,3 +36,11 @@ Style/Documentation:
 
 Style/DateTime: 
   Enabled: false
+
+Style/RescueStandardError:
+  Exclude:
+    - 'lib/tasks/elc/import.rake'
+
+Style/SpecialGlobalVars:
+  Exclude:
+    - 'lib/tasks/elc/import.rake'
