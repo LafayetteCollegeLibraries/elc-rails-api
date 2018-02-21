@@ -1,6 +1,19 @@
 require 'csv'
 
 RSpec.describe Work do
+  subject(:work) { build(:work) }
+
+  its(:title) do
+    is_expected.not_to include "(#{work.format} #{work.number})"
+  end
+
+  its(:full_title) { is_expected.to eq work[:title] }
+
+  it { is_expected.to have_and_belong_to_many :authors }
+  it { is_expected.to have_and_belong_to_many :subjects }
+  it { is_expected.to have_many :items }
+  it { is_expected.to have_many(:loans).through(:items) }
+
   context 'when importing from a CSV row' do
     let(:authors) { create_list(:author, 1) }
     let(:subjects) { create_list(:subject, 2) }
@@ -8,7 +21,7 @@ RSpec.describe Work do
 
     let(:row) do
       CSV::Row.new(
-        %w(node_id author_node_id subject_node_ids item_title format number),
+        %w[node_id author_node_id subject_node_ids item_title format number],
         [
           attrs[:drupal_node_id],
           authors.map(&:drupal_node_id).join(';'),
@@ -21,26 +34,17 @@ RSpec.describe Work do
     end
 
     describe '.initialize_from_csv_row' do
-      subject { Work.initialize_from_csv_row(row) }
+      subject { described_class.initialize_from_csv_row(row) }
 
-      its(:authors) { should eq authors }
-      its(:subjects) { should eq subjects }
-      its(:new_record?) { should be true }
+      its(:authors) { is_expected.to eq authors }
+      its(:subjects) { is_expected.to eq subjects }
+      its(:new_record?) { is_expected.to be true }
     end
 
     describe '.create_from_csv_row!' do
-      subject { Work.create_from_csv_row!(row) }
-      its(:new_record?) { should be false }
+      subject { described_class.create_from_csv_row!(row) }
+
+      its(:new_record?) { is_expected.to be false }
     end
   end
-
-  subject { build(:work) }
-
-  its(:title) { should_not include "(#{subject.format} #{subject.number})" }
-  its(:full_title) { should eq subject[:title] }
-
-  it { should have_and_belong_to_many :authors }
-  it { should have_and_belong_to_many :subjects }
-  it { should have_many :items }
-  it { should have_many(:loans).through(:items) }
 end

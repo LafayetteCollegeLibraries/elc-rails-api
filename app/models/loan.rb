@@ -1,3 +1,5 @@
+# TODO: switch to Date where we're using DateTime
+
 require 'date'
 
 class Loan < ApplicationRecord
@@ -96,7 +98,7 @@ class Loan < ApplicationRecord
     # rubocop:disable Style/GuardClause, Style/DateTime
     if date.is_a? String
       month, day, year = date.split(%r{[/-]}).map(&:to_i)
-      DateTime.new(year, month, day).utc
+      DateTime.new(year, month, day)
     end
     # rubocop:enable Style/GuardClause, Style/DateTime
   end

@@ -13,8 +13,14 @@ Rails/HasAndBelongsToMany:
 Rails/InverseOf:
   Enabled: false
 
+Rails/TimeZone:
+  Enabled: false
+
 RSpec/NestedGroups:
   Enabled: false
 
 Style/Documentation:
+  Enabled: false
+
+Style/DateTime: 
   Enabled: false

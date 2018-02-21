@@ -1,26 +1,26 @@
 RSpec.describe Item do
-  it { should belong_to :work }
-  it { should have_and_belong_to_many :loans }
-  it { should respond_to :issue }
-  it { should respond_to :volume }
-  it { should respond_to :year }
+  it { is_expected.to belong_to :work }
+  it { is_expected.to have_and_belong_to_many :loans }
+  it { is_expected.to respond_to :issue }
+  it { is_expected.to respond_to :volume }
+  it { is_expected.to respond_to :year }
 
   context 'with an base work' do
-    subject { create(:item) }
+    subject(:item) { create(:item) }
 
-    its(:title) { should eq subject.work.title }
-    its(:full_title) { should eq subject.work.full_title }
+    its(:title) { is_expected.to eq item.work.title }
+    its(:full_title) { is_expected.to eq item.work.full_title }
   end
 
   context 'with a work with subjects' do
-    subject { create(:item, work: create(:work_with_subjects)) }
+    subject(:item) { create(:item, work: create(:work_with_subjects)) }
 
-    its(:subjects) { should eq subject.work.subjects }
+    its(:subjects) { is_expected.to eq item.work.subjects }
   end
 
   context 'with a work with authors' do
-    subject { create(:item, work: create(:work_with_authors)) }
+    subject(:item) { create(:item, work: create(:work_with_authors)) }
 
-    its(:authors) { should eq subject.work.authors }
+    its(:authors) { is_expected.to eq item.work.authors }
   end
 end
