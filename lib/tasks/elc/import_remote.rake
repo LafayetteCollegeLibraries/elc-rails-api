@@ -2,11 +2,11 @@ require 'fileutils'
 require 'rake'
 
 namespace :elc do
-  desc "import data from git repository (using git_source=<url>)"
-  task :import_remote => [:copy_remote_files, :import]
+  desc 'import data from git repository (using git_source=<url>)'
+  task import_remote: %i[copy_remote_files import]
 
-  task :copy_remote_files => :environment do
-    fail("No source provided with ENV['git_source']") unless ENV['git_source']
+  task copy_remote_files: :environment do
+    raise "No source provided with ENV['git_source']" unless ENV['git_source']
     tmp_path = Rails.root.join('tmp', 'elc-data-git')
     data_path = Rails.root.join('data')
 
@@ -18,7 +18,7 @@ namespace :elc do
     tmp_data_path = File.join(tmp_path, 'data')
 
     Dir.foreach(tmp_data_path) do |file|
-      next if file == '.' or file == '..'
+      next if %w[. ..].include? file
 
       puts "copying #{file}"
 

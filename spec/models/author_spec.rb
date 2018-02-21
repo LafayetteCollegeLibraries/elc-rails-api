@@ -6,26 +6,27 @@ RSpec.describe Author do
   let(:author_name) { attrs[:name] }
   let(:row) do
     CSV::Row.new(
-      ['node_id', 'name'],
+      %w[node_id name],
       [node_id, author_name]
     )
   end
 
   describe '.initialize_from_csv_row' do
-    subject { Author.initialize_from_csv_row(row) }
+    subject { described_class.initialize_from_csv_row(row) }
 
-    its(:name) { should eq author_name }
-    its(:drupal_node_id) { should eq node_id.to_i }
-    its(:new_record?) { should be true }
+    its(:name) { is_expected.to eq author_name }
+    its(:drupal_node_id) { is_expected.to eq node_id.to_i }
+    its(:new_record?) { is_expected.to be true }
   end
 
   describe '.create_from_csv_row!' do
-    subject { Author.create_from_csv_row!(row) }
-    its(:new_record?) { should be false }
+    subject { described_class.create_from_csv_row!(row) }
+
+    its(:new_record?) { is_expected.to be false }
   end
 
-  its :types { should contain_exactly 'Author' }
-  its :drupal_node_type { should eq 'node' }
+  its(:types) { is_expected.to contain_exactly 'Author' }
+  its(:drupal_node_type) { is_expected.to eq 'node' }
 
-  it { should have_and_belong_to_many :works }
+  it { is_expected.to have_and_belong_to_many :works }
 end

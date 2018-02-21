@@ -5,42 +5,48 @@ RSpec.describe AuthorsController do
     end
 
     subject { json }
-    it { should include *%w(data meta) }
+
+    it { is_expected.to include 'data', 'meta' }
 
     describe "response.body['data']" do
       subject { json['data'] }
-      it { should be_an Array }
+
+      it { is_expected.to be_an Array }
     end
 
     describe "response.body['meta']" do
       subject { json['meta'] }
-      it { should be_a Hash }
-      it { should include *%w(total page per_page total_pages) }
+
+      it { is_expected.to be_a Hash }
+      it { is_expected.to include 'total', 'page', 'per_page', 'total_pages' }
     end
   end
 
   describe 'GET #search' do
-    before do
-      @name = 'Piggy, Miss'
-      @target = create(:author, name: @name)
-      @pool = create_list(:author, 20)
+    let(:name) { 'Piggy, Miss' }
+    let!(:target) { create(:author, name: name) }
+    let!(:pool) { create_list(:author, 20) }
 
-      get :search, params: { q: @name }
+    before do
+      get :search, params: { q: name }
     end
 
     after do
-      @target.delete
-      @pool.each { |a| a.delete }
+      target.delete
+      pool.each(&:delete)
     end
 
-    subject { json }
-    it { should include *%w(data meta) }
+    describe 'response.body' do
+      subject { json }
+
+      it { is_expected.to include 'data', 'meta' }
+    end
 
     describe "response.body['data']" do
       subject { json['data'] }
 
-      it { should_not be_empty }
-      its(:length) { should eq 1 }
+      it { is_expected.not_to be_empty }
+      its(:length) { is_expected.to eq 1 }
     end
   end
 
@@ -50,12 +56,12 @@ RSpec.describe AuthorsController do
       get :show, params: { id: target.id }
     end
 
-    describe "its payload object" do
+    describe 'its payload object' do
       subject { json }
 
-      it { should be_a Hash }
-      it { should include *%w(name id types) }
-      it { should_not include *%w(drupal_node_id drupal_node_type) }
+      it { is_expected.to be_a Hash }
+      it { is_expected.to include 'name', 'id', 'types' }
+      it { is_expected.not_to include 'drupal_node_id', 'drupal_node_type' }
     end
   end
 end

@@ -11,8 +11,8 @@ FactoryBot.define do
 
     representative { create(:representative) }
     shareholder { create(:shareholder) }
-    checkout_date DateTime.new(1820, 1, 1)
-    return_date DateTime.new(1820, 1, 21)
+    checkout_date { DateTime.new(1820, 1, 1) }
+    return_date { DateTime.new(1820, 1, 21) }
     ledger_filename 'ELCv0000'
 
     # TODO: create a propery factory
@@ -29,7 +29,10 @@ FactoryBot.define do
                 :item
               end
 
-      create_list(which, evaluator.number_of_items, loans: [loan], work: create(:work))
+      create_list(which,
+                  evaluator.number_of_items,
+                  loans: [loan],
+                  work: create(:work))
     end
   end
 end

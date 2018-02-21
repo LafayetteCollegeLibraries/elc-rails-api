@@ -4,59 +4,68 @@ RSpec.describe SubjectsController do
       get :index
     end
 
-    subject { json }
-    it { should include *%w(data meta) }
+    describe 'response.body' do
+      subject { json }
+
+      it { is_expected.to include 'data', 'meta' }
+    end
 
     describe "response.body['data']" do
       subject { json['data'] }
-      it { should be_an Array }
+
+      it { is_expected.to be_an Array }
     end
 
     describe "response.body['meta']" do
       subject { json['meta'] }
-      it { should be_a Hash }
-      it { should include *%w(total page per_page total_pages) }
+
+      it { is_expected.to be_a Hash }
+      it { is_expected.to include 'total', 'page', 'per_page', 'total_pages' }
     end
   end
 
   describe 'GET #search' do
+    let(:term) { 'SEARCH TERM' }
+    let(:label) { "Here it is: [#{term}]" }
+
     before do
-      term = 'SEARCH TERM'
-      @label = "Here it is: [#{term}]"
-      @target = create(:subject, label: @label)
-      @pool = create_list(:subject, 20)
+      create(:subject, label: label)
+      create_list(:subject, 20)
 
       get :search, params: { q: term }
     end
 
     after do
-      @target.delete
-      @pool.each { |s| s.delete }
+      Subject.delete_all
     end
 
-    subject { json }
-    it { should include *%w(data meta)}
+    describe 'response.body' do
+      subject { json }
+
+      it { is_expected.to include 'data', 'meta' }
+    end
 
     describe "response.body['data']" do
       subject { json['data'] }
 
-      it { should_not be_empty }
-      its(:length) { should eq 1 }
+      it { is_expected.not_to be_empty }
+      its(:length) { is_expected.to eq 1 }
     end
   end
 
   describe 'GET #show' do
+    let(:target) { create(:subject, label: 'Cool Subject') }
+
     before do
-      target = create(:subject, label: 'Cool Subject')
       get :show, params: { id: target.id }
     end
 
-    describe "its payload object" do
+    describe 'its payload object' do
       subject { json }
 
-      it { should be_a Hash }
-      it { should include *%w(label id) }
-      it { should_not include *%w(drupal_node_id drupal_node_type) }
+      it { is_expected.to be_a Hash }
+      it { is_expected.to include 'label', 'id' }
+      it { is_expected.not_to include 'drupal_node_id', 'drupal_node_type' }
     end
   end
 end

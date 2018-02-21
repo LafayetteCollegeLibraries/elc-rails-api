@@ -5,5 +5,5 @@ end
 json.partial! 'partials/meta', locals: {
   total: @works.count,
   page: @page,
-  per_page: @per_page,
+  per_page: @per_page
 }

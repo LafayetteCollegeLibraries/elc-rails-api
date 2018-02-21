@@ -1,42 +1,41 @@
 RSpec.describe LedgersController do
-  before do
-    @ledger = Ledger.create
-  end
-
-  after do
-    Ledger.destroy_all
-  end
+  let!(:ledger) { Ledger.create }
 
   describe '#index' do
-    before do 
+    before do
       get :index
     end
 
-    subject { json }
-    it { should be_a Hash }
-    it { should include *%w(data meta) }
+    describe 'response.body' do
+      subject { json }
+
+      it { is_expected.to be_a Hash }
+      it { is_expected.to include 'data', 'meta' }
+    end
 
     describe "response.body['data']" do
       subject { json['data'] }
-      it { should be_an Array }
-      its(:length) { should eq 1 }
+
+      it { is_expected.to be_an Array }
     end
 
     describe "response.body['meta']" do
       subject { json['meta'] }
-      it { should be_a Hash }
-      it { should include *%w(page per_page total total_pages) }
+
+      it { is_expected.to be_a Hash }
+      it { is_expected.to include 'page', 'per_page', 'total', 'total_pages' }
     end
   end
 
   describe '#show' do
     before do
-      get :show, params: { id: @ledger.id }
+      get :show, params: { id: ledger.id }
     end
 
     subject { json }
-    it { should be_a Hash }
-    it { should include *%w(id loans) }
-    its(:count) { should be_an Integer }
+
+    it { is_expected.to be_a Hash }
+    it { is_expected.to include 'id', 'loans' }
+    its(:count) { is_expected.to be_an Integer }
   end
 end

@@ -6,10 +6,10 @@ class AuthorsController < ApplicationController
   def search
     @authors = Author.search(params[:q])
                      .paginate(page: params[:page], per_page: params[:per_page])
-    
+
     @total = @authors.count
 
-    render template: "authors/index"
+    render template: 'authors/index'
   end
 
   def show

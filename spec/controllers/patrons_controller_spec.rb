@@ -12,53 +12,59 @@ RSpec.describe PatronsController do
     end
 
     subject { json }
-    it { should be_a Hash }
-    it { should include *%w(data meta) }
+
+    it { is_expected.to be_a Hash }
+    it { is_expected.to include 'data', 'meta' }
 
     describe "response.body['data']" do
       subject { json['data'] }
-      it { should be_an Array }
-      its(:length) { should eq 4 }
+
+      it { is_expected.to be_an Array }
+      its(:length) { is_expected.to be > 0 }
     end
 
     describe "response.body['meta']" do
       subject { json['meta'] }
-      it { should be_a Hash }
-      it { should include *%w(page total_pages per_page total) }
+
+      it { is_expected.to be_a Hash }
+      it { is_expected.to include 'page', 'total_pages', 'per_page', 'total' }
     end
   end
 
   describe '#search' do
+    let(:query) { 'Kermit' }
+
     before do
-      query = 'Kermit'
-      @patron = create(:patron, name: 'Frog, Kermit')
+      create(:patron, name: "Kermit, #{query}")
       get :search, params: { q: query }
     end
 
-    after do
-      @patron.delete
-    end
+    describe 'response.body' do
+      subject { json }
 
-    subject { json }
-    it { should be_a Hash }
-    it { should include *%w(data meta) }
+      it { is_expected.to be_a Hash }
+      it { is_expected.to include 'data', 'meta' }
+    end
 
     describe "response.body['data']" do
       subject { json['data'] }
-      it { should be_an Array }
-      its(:length) { should eq 1 }
+
+      it { is_expected.to be_an Array }
+      its(:length) { is_expected.to be > 0 }
     end
   end
 
   describe '#show' do
+    subject { json }
+
+    let(:patron) { create(:patron) }
+
     before do
-      @patron = create(:patron)
-      get :show, params: { id: @patron.id }
+      get :show, params: { id: patron.id }
     end
 
-    subject { json }
-    it { should be_a Hash }
-    it { should include *%w(name types id) }
-    it { should_not include *%w(drupal_node_id drupal_node_type) }
-  end 
+    it { is_expected.to be_a Hash }
+    it { is_expected.to include 'name', 'types', 'id' }
+    it { is_expected.not_to include 'drupal_node_id', 'drupal_node_type' }
+  end
 end

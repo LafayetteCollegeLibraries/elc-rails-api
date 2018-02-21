@@ -19,7 +19,7 @@ json.representative do
   end
 end
 
-json.shareholder do 
+json.shareholder do
   if loan.shareholder.present?
     json.partial! 'partials/person', person: loan.shareholder
   else

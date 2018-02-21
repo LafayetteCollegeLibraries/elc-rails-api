@@ -1,0 +1,47 @@
+inherit_from: .rubocop_todo.yml
+
+require: rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/tasks/elc/import.rake'
+
+Metrics/LineLength:
+  Exclude:
+    - 'lib/tasks/elc/import.rake'
+
+Rails:
+  Enabled: true
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/TimeZone:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DateTime: 
+  Enabled: false
+
+Style/RescueStandardError:
+  Exclude:
+    - 'lib/tasks/elc/import.rake'
+
+Style/SpecialGlobalVars:
+  Exclude:
+    - 'lib/tasks/elc/import.rake'
