@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence :drupal_node_id
 
     factory :shareholder do
-      person_types do 
+      person_types do
         [
           create(:person_type, :shareholder),
           create(:person_type, :representative)

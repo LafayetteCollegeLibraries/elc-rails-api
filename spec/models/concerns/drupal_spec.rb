@@ -17,15 +17,17 @@ RSpec.describe Drupal do
     context 'when searching for a model with the Drupal mixin' do
       let(:subjects) { create_list(:subject, 5) }
       let(:target) { subjects.last }
+      let(:found) { Subject.find_by(drupal_node_id: target.drupal_node_id) }
 
       it 'finds the target by its :drupal_node_id' do
-        expect(Subject.find_by_drupal_id(target.drupal_node_id)).to eq target
+        expect(found).to eq target
       end
     end
   end
 
   describe '#drupal_url' do
     let(:drupal_node_id) { '1234' }
+
     context 'when drupal_node_type is "node"' do
       subject do
         Drupalable.new.tap do |d|
@@ -34,8 +36,8 @@ RSpec.describe Drupal do
         end
       end
 
-      its(:drupal_url) { should include drupal_node_id }
-      its(:drupal_url) { should include 'node' }
+      its(:drupal_url) { is_expected_to include drupal_node_id }
+      its(:drupal_url) { is_expected_to include 'node' }
     end
 
     context 'when drupal_node_type is "taxonomy"' do
@@ -46,8 +48,8 @@ RSpec.describe Drupal do
         end
       end
 
-      its(:drupal_url) { should include drupal_node_id }
-      its(:drupal_url) { should include 'taxonomy/term' }
+      its(:drupal_url) { is_expected_to include drupal_node_id }
+      its(:drupal_url) { is_expected_to include 'taxonomy/term' }
     end
   end
 end

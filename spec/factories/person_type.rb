@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :person_type do
     sequence :drupal_node_id
-    
+
     trait :shareholder do
       label 'Shareholder'
     end
