@@ -36,8 +36,8 @@ RSpec.describe Drupal do
         end
       end
 
-      its(:drupal_url) { is_expected_to include drupal_node_id }
-      its(:drupal_url) { is_expected_to include 'node' }
+      its(:drupal_url) { is_expected.to include drupal_node_id }
+      its(:drupal_url) { is_expected.to include 'node' }
     end
 
     context 'when drupal_node_type is "taxonomy"' do
@@ -48,8 +48,8 @@ RSpec.describe Drupal do
         end
       end
 
-      its(:drupal_url) { is_expected_to include drupal_node_id }
-      its(:drupal_url) { is_expected_to include 'taxonomy/term' }
+      its(:drupal_url) { is_expected.to include drupal_node_id }
+      its(:drupal_url) { is_expected.to include 'taxonomy/term' }
     end
   end
 end
