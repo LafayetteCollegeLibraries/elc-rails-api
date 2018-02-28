@@ -70,3 +70,5 @@ group :test do
   gem 'simplecov', require: false
   gem 'coveralls', require: false
 end
+
+gem 'rack-cors', require: 'rack/cors'
