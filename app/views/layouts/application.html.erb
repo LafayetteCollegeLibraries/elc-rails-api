@@ -8,7 +8,9 @@
     <%= javascript_include_tag 'application' %>
   </head>
   <body>
-    <%= render 'shared/header' %>
-    <%= yield %>
+    <%= render 'shared/site_header' %>
+    <div class="page-content p-4">
+      <%= yield %>
+    </div>
   </body>
 </html>
