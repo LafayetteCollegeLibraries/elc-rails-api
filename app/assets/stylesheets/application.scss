@@ -1,0 +1,9 @@
+// overrides for bootstrap variables
+@import "elc-bootstrap-variables";
+
+// the whole she-bang
+// TODO: only take what we need/use
+@import "bootstrap";
+
+// our specific styles, outside of bootstrap
+@import "elc";
