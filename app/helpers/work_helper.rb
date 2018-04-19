@@ -1,3 +1,2 @@
 module WorkHelper
-
 end

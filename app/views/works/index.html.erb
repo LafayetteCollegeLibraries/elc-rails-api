@@ -1,0 +1,19 @@
+<%= render 'works/index_table' %>
+
+<script>
+  $(document).ready(function () {
+    var $table = $('#works-table')
+
+    $table.dataTable({
+      processing: true,
+      serverSide: true,
+      ajax: $table.data('source'),
+      pagingType: 'full_numbers',
+      columns: [
+        { data: 'title' },
+        { data: 'authors' },
+        // { data: 'link' }
+      ]
+    })
+  })
+</script>

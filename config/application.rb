@@ -13,6 +13,7 @@ module ElCamino
 
     config.after_initialize do |app|
       app.config.paths.add 'app/presenters', eager_load: true
+      app.config.paths.add 'app/datatables', eager_load: true
     end
 
     # Settings in config/environments/* take precedence over those specified here.

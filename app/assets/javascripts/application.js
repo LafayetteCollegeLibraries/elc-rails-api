@@ -14,4 +14,5 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require rails-ujs
+//= require datatables/media/js/jquery.dataTables.min
 //= require_tree .
