@@ -1,20 +1,22 @@
-<div class="row">
-  <%# we're using bootstrap's `.order-*` class to have the icon display after the info on `md`
-      screens, but to come before it on larger screens (to match our mockups) %>
-  <!-- info -->
-  <div class="col-md-8 order-md-2">
-    <span class="work-location">
-      <%= location %>
-    </span>
-    <h2 class="display-4"><%= @work.title %></h2>
-    <p class="work-author lead">by <%= authors %></p>
+<% present @work do |presenter| %>
+  <div class="row">
+    <%# we're using bootstrap's `.order-*` class to have the icon display after the info on `md`
+        screens, but to come before it on larger screens (to match our mockups) %>
+    <!-- info -->
+    <div class="col-md-8 order-md-2">
+      <span class="work-location">
+        <%= presenter.location %>
+      </span>
+      <h2 class="display-4"><%= presenter.title %></h2>
+      <p class="work-author lead">by <%= presenter.linked_authors %></p>
 
-    <%= inline_subject_list %>
-  </div>
+      <%= presenter.inline_subject_list %>
+    </div>
 
-  <%# TODO: hide icon on smaller screens %>
-  <!-- icon -->
-  <div class="col-md-4 order-md-1">
-    <%= render 'shared/icons/book' %>
+    <%# TODO: hide icon on smaller screens %>
+    <!-- icon -->
+    <div class="col-md-4 order-md-1">
+      <%= render 'shared/icons/book' %>
+    </div>
   </div>
-</div>
+<% end %>
