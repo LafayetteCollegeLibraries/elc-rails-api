@@ -7,7 +7,7 @@ class WorkDatatable < AjaxDatatablesRails::Base
     @view_columns ||= {
       title: { source: 'Work.title' },
       authors: { source: 'Author.name' },
-
+      subjects: { source: 'Subject.label' }
     }
   end
 
@@ -16,7 +16,8 @@ class WorkDatatable < AjaxDatatablesRails::Base
       {
         title: record.title,
         authors: record.authors.map(&:name).join(', '),
-        # link: link_to 'View', record
+        subjects: record.subjects.map(&:label).join(', '),
+        link: link_to('View', record, class: 'btn btn-info'),
       }
     end
   end

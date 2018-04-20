@@ -2,6 +2,7 @@
   "name": "el-camino",
   "private": true,
   "dependencies": {
-    "datatables": "^1.10.13"
+    "datatables": "^1.10.13",
+    "datatables.net-bs4": "^1.10.16"
   }
 }

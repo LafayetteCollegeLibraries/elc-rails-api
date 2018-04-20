@@ -15,4 +15,5 @@
 //= require bootstrap-sprockets
 //= require rails-ujs
 //= require datatables/media/js/jquery.dataTables.min
+//= require datatables.net-bs4/js/dataTables.bootstrap4
 //= require_tree .

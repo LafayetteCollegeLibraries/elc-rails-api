@@ -4,7 +4,10 @@
 // the whole she-bang
 // TODO: only take what we need/use
 @import "bootstrap";
-@import "datatables/media/css/jquery.dataTables.min.css";
+
+// use just the bootstrap css extension for dataTables
+// (no need to include the base dataTables styles)
+@import "datatables.net-bs4/css/dataTables.bootstrap4.css";
 
 // our specific styles, outside of bootstrap
 @import "elc";

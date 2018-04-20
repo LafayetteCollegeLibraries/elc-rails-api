@@ -1,10 +1,12 @@
-<%= render 'works/index_table' %>
+<div class="container">
+  <%= render 'works/index_table' %>
+</div>
 
 <script>
   $(document).ready(function () {
     var $table = $('#works-table')
 
-    $table.dataTable({
+    $table.DataTable({
       processing: true,
       serverSide: true,
       ajax: $table.data('source'),
@@ -12,7 +14,8 @@
       columns: [
         { data: 'title' },
         { data: 'authors' },
-        // { data: 'link' }
+        { data: 'subjects' },
+        { data: 'link' }
       ]
     })
   })
