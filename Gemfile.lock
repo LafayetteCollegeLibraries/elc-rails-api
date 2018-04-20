@@ -103,9 +103,6 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.7.0)
-      activesupport (>= 4.2.0)
-      multi_json (>= 1.2)
     jquery-datatables-rails (3.4.0)
       actionpack (>= 3.1)
       jquery-rails
@@ -285,7 +282,6 @@ DEPENDENCIES
   coveralls
   database_cleaner
   factory_bot_rails (~> 4.0)
-  jbuilder (~> 2.5)
   jquery-datatables-rails
   jquery-rails
   listen (>= 3.0.5, < 3.2)
