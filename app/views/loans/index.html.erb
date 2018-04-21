@@ -1,0 +1,17 @@
+<div class="container">
+  <%= table_for(:loans) %>
+</div>
+
+<script>
+  $(document).ready(function () {
+    var $table = $('#loans-table')
+
+    $table.DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: $table.data('source'),
+      pagingType: 'full_numbers',
+      columns: <%= datatable_js_columns_for(:loans) %>
+    })
+  })
+</script>

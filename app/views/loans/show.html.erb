@@ -1,0 +1,34 @@
+<% present @loan do |presenter| %>
+  <div class="row">
+    <div class="col-md-8 order-md-2">
+      <%= render presenter.patron_template, presenter: presenter %>
+
+      <div class="loan-item">
+        <h6>Work</h6>
+        <p class="lead">
+          <%= presenter.links_to_items %>
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="loan-checkout col-md-6">
+          <h6>Checked-out</h6>
+          <p class="lead">
+            <%= presenter.checkout_date.strftime('%B %-d, %Y') %>
+          </p>
+        </div>
+
+        <div class="loan-return col-md-6">
+          <h6>Returned</h6>
+          <p class="lead">
+            <%= presenter.return_date.strftime('%B %-d, %Y') %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 order-md-1">
+      <%= render 'shared/icons/loan' %>
+    </div>
+  </div>
+<% end %>

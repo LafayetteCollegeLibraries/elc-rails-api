@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Easton Library Company Database</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+  <body>
+    <%= render 'shared/site_header' %>
+    <div class="container page-content p-5">
+      <%= yield %>
+    </div>
+  </body>
+</html>

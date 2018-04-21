@@ -57,9 +57,9 @@ class Loan < ApplicationRecord
   end
 
   def loaned_to
-    if representative.present?
+    if representative.present? && representative.name.present?
       representative.name
-    elsif shareholder.present?
+    elsif shareholder.present? && shareholder.name.present?
       shareholder.name
     else
       '???'
